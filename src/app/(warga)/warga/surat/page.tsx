@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, ChevronRight, CheckCircle2, Clock, XCircle } from "lucide-react";
+import { FileText, ChevronRight, CheckCircle2, Clock, XCircle, Check, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -148,7 +148,7 @@ export default function WargaSurat() {
                 {/* Stepper Timeline Status */}
                 <div className="mt-1 pt-3 border-t border-slate-100 flex items-center justify-between text-[10px] w-full text-slate-400 font-semibold">
                   <div className="flex items-center gap-1">
-                    <span className="w-4.5 h-4.5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-[9px] font-bold">✓</span>
+                    <span className="w-4.5 h-4.5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-[9px] font-bold"><Check className="w-2.5 h-2.5" /></span>
                     <span className="text-slate-800">Diajukan</span>
                   </div>
                   <div className="flex-1 h-0.5 bg-slate-200 mx-2"></div>
@@ -156,7 +156,7 @@ export default function WargaSurat() {
                     <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[9px] font-bold ${
                       surat.status !== "Menunggu" ? "bg-emerald-500 text-white" : "bg-blue-600 text-white animate-pulse"
                     }`}>
-                      {surat.status !== "Menunggu" ? "✓" : "2"}
+                      {surat.status !== "Menunggu" ? <Check className="w-2.5 h-2.5" /> : "2"}
                     </span>
                     <span className={surat.status === "Menunggu" ? "text-blue-600 font-bold" : "text-slate-800"}>Proses RT</span>
                   </div>
@@ -165,7 +165,7 @@ export default function WargaSurat() {
                     <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[9px] font-bold ${
                       isApproved ? "bg-emerald-500 text-white" : isRejected ? "bg-red-500 text-white" : "bg-slate-200 text-slate-400"
                     }`}>
-                      {isApproved ? "✓" : isRejected ? "✗" : "3"}
+                      {isApproved ? <Check className="w-2.5 h-2.5" /> : isRejected ? <X className="w-2.5 h-2.5" /> : "3"}
                     </span>
                     <span className={isApproved ? "text-emerald-600 font-bold" : isRejected ? "text-red-600 font-bold" : "text-slate-400"}>
                       {isRejected ? "Ditolak" : "Selesai"}

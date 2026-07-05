@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { User, Shield, MapPin, Bell, LogOut, ChevronRight, Check, FileText, X } from "lucide-react";
+import { User, Shield, MapPin, Bell, LogOut, ChevronRight, Check, FileText, X, Lightbulb } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -439,7 +439,7 @@ export default function WargaProfil() {
             {activeDocTab === "ktp" && (
               <div className="py-2 flex flex-col items-center justify-center">
                 <p className="text-[10px] text-slate-450 mb-3 font-semibold flex items-center gap-1">
-                  <span>💡</span> Klik kartu untuk melihat bagian belakang
+                  <Lightbulb className="w-3 h-3 text-amber-500" /> Klik kartu untuk melihat bagian belakang
                 </p>
 
                 {/* 3D Flip Card KTP Container */}

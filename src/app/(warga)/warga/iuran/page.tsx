@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Receipt, CheckCircle2, History, QrCode } from "lucide-react";
+import { Receipt, CheckCircle2, History, QrCode, Check } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
@@ -73,7 +73,7 @@ export default function WargaIuran() {
             )}
             {myTagihan.status === "Lunas" && (
               <Button className="w-full bg-emerald-100 text-emerald-800 border border-emerald-200 cursor-not-allowed font-bold" size="lg" disabled>
-                Lunas ✓
+                <span className="flex items-center justify-center">Lunas <Check className="w-4 h-4 ml-1" /></span>
               </Button>
             )}
           </CardContent>

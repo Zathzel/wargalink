@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, Bell, Clock, FileText, ArrowRight, MessageSquare } from "lucide-react";
+import { Wallet, Bell, Clock, FileText, ArrowRight, MessageSquare, Check } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { StaggerContainer, StaggerItem } from "@/components/ui/animated-container";
@@ -86,7 +86,7 @@ export default function WargaHome() {
                       className="border-emerald-200 bg-emerald-50 text-emerald-700 rounded-xl cursor-not-allowed font-bold"
                       disabled
                     >
-                      Lunas ✓
+                      <span className="flex items-center">Lunas <Check className="w-4 h-4 ml-1" /></span>
                     </Button>
                   )}
                 </>
