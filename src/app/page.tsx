@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, LogIn, ShieldCheck, Loader2 } from "lucide-react";
+import { Eye, EyeOff, LogIn, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApp } from "@/context/AppContext";
+import { AppLogo } from "@/components/AppLogo";
 
 const USERS: Record<string, { password: string; redirect: string; role: string; desc: string }> = {
   adminrt123: { password: "wargalink123", redirect: "/admin", role: "Admin RT/RW", desc: "Ketua RT 01 / RW 05" },
@@ -73,9 +74,10 @@ export default function LoginPage() {
           transition={{ duration: 0.5 }}
           className="text-center mb-8"
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-2xl shadow-blue-600/40 mb-4">
-            <ShieldCheck className="w-9 h-9 text-white" />
-          </div>
+          <AppLogo
+            priority
+            className="mx-auto mb-4 h-20 w-24 rounded-2xl shadow-2xl shadow-blue-600/20 ring-1 ring-white/80"
+          />
           <h1 className="text-4xl font-black text-slate-800 tracking-tight">WargaLink</h1>
           <p className="text-slate-500 font-medium mt-1">Platform Digital Administrasi RT/RW</p>
         </motion.div>

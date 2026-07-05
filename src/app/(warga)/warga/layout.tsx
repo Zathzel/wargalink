@@ -7,6 +7,7 @@ import { Home, FileText, Wallet, Bell, User, Loader2 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { AppLogo } from "@/components/AppLogo";
 
 export default function WargaLayout({ children }: { children: ReactNode }) {
   const { currentUser, isLoaded, notifications, markNotifikasiRead, clearAllNotifikasi } = useApp();
@@ -113,9 +114,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
       {/* Compact Header Bar (only visible on non-home pages for context) */}
       <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-slate-100/80 px-5 py-3 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-gradient-to-br from-primary to-blue-600 rounded-md flex items-center justify-center shadow">
-            <span className="text-white font-bold text-xs">W</span>
-          </div>
+          <AppLogo className="h-7 w-8 rounded-md shadow ring-1 ring-slate-200/70" />
           <span className="font-extrabold text-slate-800 text-sm tracking-tight">WargaLink</span>
         </div>
         <div className="flex items-center gap-3">

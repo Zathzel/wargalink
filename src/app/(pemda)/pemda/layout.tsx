@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Map, Users, FileBarChart, Shield, LayoutDashboard, LogOut, Loader2 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
+import { AppLogo } from "@/components/AppLogo";
 import { toast } from "sonner";
 
 export default function PemdaLayout({ children }: { children: ReactNode }) {
@@ -64,7 +65,7 @@ export default function PemdaLayout({ children }: { children: ReactNode }) {
       {/* Top Navbar */}
       <header className="h-16 bg-white/80 backdrop-blur-xl border-b border-white/50 shadow-sm flex items-center justify-between px-6 shrink-0 z-20">
         <div className="flex items-center gap-4">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg shadow-md flex items-center justify-center font-bold text-white">W</div>
+          <AppLogo className="h-9 w-10 rounded-lg shadow-md ring-1 ring-slate-200/70" />
           <h1 className="text-xl font-extrabold tracking-tight text-slate-800">WargaLink <span className="text-blue-600">Pemda</span></h1>
         </div>
         <div className="flex items-center gap-4 text-sm">
