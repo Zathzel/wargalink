@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, Users, CheckCircle, AlertCircle, Filter } from "lucide-react";
+import { Search, MapPin, Users, CheckCircle, AlertCircle, Filter, FileText, Wallet } from "lucide-react";
 import { useState } from "react";
 
 const MapWithNoSSR = dynamic(() => import("@/components/MapComponent"), {
@@ -210,9 +210,9 @@ export default function PemdaPeta() {
                         </Badge>
                       </div>
                       <p className="text-xs text-slate-500">{rt.kelurahan} · {rt.warga} Warga</p>
-                      <div className="mt-2 flex gap-3 text-[10px] text-slate-400 font-medium">
-                        <span>📄 {rt.suratBulanIni} surat</span>
-                        <span>💰 Rp {(rt.iuranTerkumpul / 1000000).toFixed(1)}jt</span>
+                      <div className="mt-2 flex items-center gap-3 text-[10px] text-slate-400 font-medium">
+                        <span className="flex items-center gap-1"><FileText className="w-3 h-3" /> {rt.suratBulanIni} surat</span>
+                        <span className="flex items-center gap-1"><Wallet className="w-3 h-3" /> Rp {(rt.iuranTerkumpul / 1000000).toFixed(1)}jt</span>
                       </div>
                     </li>
                   ))}

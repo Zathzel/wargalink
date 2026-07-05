@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import L from 'leaflet';
 import { useApp } from '@/context/AppContext';
+import { MapPin, Users, FileText, Wallet, User } from 'lucide-react';
 
 interface MapComponentProps {
   searchQuery?: string;
@@ -130,17 +131,17 @@ export default function MapComponent({ searchQuery = "", kelurahanFilter = "Semu
                     {rt.status}
                   </span>
                 </div>
-                <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '8px' }}>
-                  📍 Kel. {rt.kelurahan}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#64748b', marginBottom: '8px' }}>
+                  <MapPin size={12} /> Kel. {rt.kelurahan}
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '8px' }}>
                   {[
-                    { label: '👥 Warga', value: `${rt.warga} jiwa` },
-                    { label: '📄 Surat', value: `${rt.suratBulanIni} dok` },
-                    { label: '💰 Iuran', value: `Rp ${(rt.iuranTerkumpul / 1000000).toFixed(1)}jt` },
-                    { label: '👤 Koordinator', value: rt.koordinator },
-                  ].map(item => (
-                    <div key={item.label} style={{ background: '#f8fafc', borderRadius: '6px', padding: '6px' }}>
+                    { label: <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Users size={10} /> Warga</div>, value: `${rt.warga} jiwa` },
+                    { label: <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FileText size={10} /> Surat</div>, value: `${rt.suratBulanIni} dok` },
+                    { label: <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Wallet size={10} /> Iuran</div>, value: `Rp ${(rt.iuranTerkumpul / 1000000).toFixed(1)}jt` },
+                    { label: <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><User size={10} /> Koordinator</div>, value: rt.koordinator },
+                  ].map((item, idx) => (
+                    <div key={idx} style={{ background: '#f8fafc', borderRadius: '6px', padding: '6px' }}>
                       <div style={{ fontSize: '10px', color: '#94a3b8', marginBottom: '2px' }}>{item.label}</div>
                       <div style={{ fontSize: '11px', fontWeight: '700', color: '#334155' }}>{item.value}</div>
                     </div>
