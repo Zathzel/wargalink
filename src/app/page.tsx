@@ -64,118 +64,110 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
-        {/* Animated Background Mesh & Grid */}
-        <motion.div style={{ y: yHeroBg }} className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-overlay"></div>
-          <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-emerald-400/20 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[60%] bg-teal-400/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-[30%] right-[20%] w-[30%] h-[40%] bg-blue-400/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
-        </motion.div>
+      {/* Hero Section - Unique Asymmetrical Layout */}
+      <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-slate-50">
+        {/* Giant Background Text */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.03]">
+          <h1 className="text-[25vw] font-black leading-none tracking-tighter text-emerald-950 whitespace-nowrap">
+            WARGALINK
+          </h1>
+        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-emerald-700 font-bold text-xs sm:text-sm mb-8 shadow-sm border border-emerald-100"
+        {/* Abstract SVG Shapes */}
+        <div className="absolute inset-0 pointer-events-none">
+          <svg className="absolute top-0 right-0 w-1/2 h-full text-emerald-100/40 transform translate-x-1/3 -translate-y-1/4" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18,97.2,-2.3C97.6,13.4,92.4,29.3,83.1,42.4C73.8,55.5,60.4,65.8,45.8,73.1C31.2,80.4,15.6,84.7,0.3,84.1C-15,83.5,-30.1,78.1,-43.3,69.5C-56.5,60.9,-67.9,49.1,-75.7,35.2C-83.5,21.3,-87.7,5.3,-86.3,-10.1C-84.9,-25.5,-77.9,-40.3,-67.6,-51.7C-57.3,-63.1,-43.7,-71.1,-29.6,-77.8C-15.5,-84.5,-0.9,-89.9,13.5,-88.7C27.9,-87.5,42.5,-79.8,44.7,-76.4Z" transform="translate(100 100)" />
+          </svg>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400/20 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+          
+          {/* Left Side: Minimalist Text & CTA */}
+          <div className="flex-1 w-full text-left pt-10 lg:pt-0 lg:pr-10 relative z-30">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <Zap className="w-4 h-4 text-emerald-500 fill-emerald-500" />
-              Rilis Terbaru: WargaLink v2.0
-            </motion.div>
-            
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-slate-800 tracking-tight mb-6 leading-[1.1]">
-              Kelola RT/RW Lebih <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-700">
-                Cerdas & Modern
-              </span>
-            </h1>
-            
-            <p className="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
-              Satu platform terintegrasi untuk pengurus RT, Warga, dan Pemda. Tinggalkan cara lama, sambut transparansi dan kemudahan digital.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="w-16 h-1.5 bg-emerald-500 mb-8 rounded-full shadow-lg shadow-emerald-500/40"></div>
+              
+              <h2 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-black text-slate-800 tracking-tighter leading-[0.9] mb-8">
+                RT/RW <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-500 to-teal-700">
+                  Era Baru.
+                </span>
+              </h2>
+              
+              <p className="text-lg text-slate-600 font-medium mb-10 max-w-sm leading-relaxed">
+                Platform digital tanpa batas untuk mengelola warga, keuangan, dan aduan. Lupakan kertas, mulai langkah cerdas.
+              </p>
+              
               <Link href="/login">
-                <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-emerald-600/30 transition-all hover:-translate-y-1 active:scale-95">
-                  Mulai Gunakan <ArrowRight className="w-5 h-5" />
+                <button className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-slate-900/30 transition-all hover:scale-105 active:scale-95 group">
+                  Eksplorasi <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
-              <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 px-8 py-4 rounded-2xl font-bold text-lg shadow-sm border border-slate-200 transition-all hover:-translate-y-1 active:scale-95">
-                Lihat Demo
-              </button>
-            </div>
-          </motion.div>
-          {/* Hero Image / Screenshot Showcase */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            className="mt-16 relative max-w-5xl mx-auto"
-          >
-            {/* Glow / Backdrop behind image */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 to-teal-500/20 rounded-3xl blur-2xl transform scale-105"></div>
-            
-            <div className="relative rounded-2xl overflow-hidden border border-white/40 shadow-2xl bg-white/50 backdrop-blur-sm p-2">
-              <div className="rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                {/* Mac-like window controls for aesthetic */}
-                <div className="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-4 gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+            </motion.div>
+          </div>
+
+          {/* Right Side: Composition Image Showcase */}
+          <div className="flex-[1.4] w-full relative h-[400px] sm:h-[500px] lg:h-[650px] perspective-1000">
+            <motion.div
+              initial={{ opacity: 0, rotateY: 20, rotateX: 10, z: -100 }}
+              animate={{ opacity: 1, rotateY: -5, rotateX: 5, z: 0 }}
+              transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+              className="absolute top-10 right-0 lg:-right-10 w-[85%] lg:w-[90%] rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/60 bg-white/40 backdrop-blur-md p-2 z-10"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
+                <div className="h-6 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-red-400"></div>
+                  <div className="w-2 h-2 rounded-full bg-amber-400"></div>
+                  <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
                 </div>
                 <Image 
                   src="/ui-rt-dashboard.png" 
-                  alt="WargaLink Dashboard" 
+                  alt="Desktop Dashboard" 
                   width={1200} 
                   height={800} 
                   className="w-full h-auto object-cover object-top"
                   priority
                 />
               </div>
-            </div>
-            
-            {/* Floating Element Over Image */}
+            </motion.div>
+
             <motion.div
-              animate={{ y: [0, -15, 0] }}
-              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-              className="absolute -right-4 md:-right-10 top-1/4 bg-white/90 backdrop-blur-xl p-4 rounded-2xl shadow-xl border border-white flex items-center gap-3 z-20"
+              initial={{ opacity: 0, y: 50, x: -20 }}
+              animate={{ opacity: 1, y: 0, x: 0 }}
+              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+              className="absolute bottom-5 lg:bottom-10 left-0 lg:-left-10 w-[35%] sm:w-[30%] lg:w-[32%] rounded-[2rem] lg:rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border-4 border-white/90 bg-white z-20 overflow-hidden transform -rotate-6 hover:rotate-0 transition-transform duration-500"
             >
-              <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
-                <Users className="w-5 h-5 text-teal-600" />
+              <Image 
+                src="/ui-warga.png" 
+                alt="Mobile Warga App" 
+                width={400} 
+                height={800} 
+                className="w-full h-auto object-cover object-top"
+                priority
+              />
+            </motion.div>
+            
+            {/* Decorative Floating Status */}
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              className="absolute top-0 left-1/4 bg-white/90 backdrop-blur-xl p-3 sm:p-4 rounded-2xl shadow-xl border border-white flex items-center gap-3 z-30"
+            >
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
               </div>
-              <div className="text-left">
-                <p className="text-xs font-bold text-slate-500 uppercase">Warga Aktif</p>
-                <p className="text-lg font-black text-slate-800">+120</p>
+              <div>
+                <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">Sistem Aktif</p>
+                <p className="text-sm sm:text-lg font-black text-slate-800">100% Online</p>
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* Floating Stats */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto relative z-10"
-          >
-            {[
-              { label: "RT Terdaftar", value: "500+" },
-              { label: "Warga Aktif", value: "25k+" },
-              { label: "Surat Selesai", value: "100k+" },
-              { label: "Rating App", value: "4.9/5" }
-            ].map((stat, i) => (
-              <div key={i} className="bg-white/60 backdrop-blur-md border border-white p-4 rounded-2xl shadow-sm">
-                <p className="text-3xl font-black text-slate-800">{stat.value}</p>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">{stat.label}</p>
-              </div>
-            ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
