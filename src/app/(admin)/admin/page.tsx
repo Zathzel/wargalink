@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, FileText, CheckCircle, TrendingUp, Wallet, AlertCircle } from "lucide-react";
+import { Users, FileText, CheckCircle, TrendingUp, Wallet, AlertCircle, Siren, Flame, ShieldAlert, HeartPulse, Tent } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StaggerContainer, StaggerItem } from "@/components/ui/animated-container";
 import { toast } from "sonner";
@@ -9,7 +9,11 @@ import Link from "next/link";
 import { useApp } from "@/context/AppContext";
 
 export default function AdminDashboard() {
-  const { daftarWarga, transaksiBulanan, suratList, tagihanList } = useApp();
+  const { daftarWarga, transaksiBulanan, suratList, tagihanList, daruratList, selesaikanDarurat, tamuList, peminjamanList } = useApp();
+
+  const activeDarurat = daruratList.filter(d => d.status === "Aktif");
+  const pendingPinjamanCount = peminjamanList.filter(p => p.status === "Menunggu").length;
+  const tamuHariIni = tamuList.length;
 
   const handleDownload = () => {
     toast.promise(
@@ -39,7 +43,9 @@ export default function AdminDashboard() {
     { title: "Total Warga", value: totalWargaCount.toString(), trend: "+4 bulan ini", icon: Users, href: "/admin/warga" },
     { title: "Kas Bulan Ini", value: `Rp ${juniPemasukan.toLocaleString("id-ID")}`, trend: "Kas Juni 2026", icon: Wallet, href: "/admin/keuangan" },
     { title: "Surat Pending", value: pendingSuratCount.toString(), trend: "Butuh approval", icon: FileText, href: "/admin/surat" },
-    { title: "Laporan Aktif", value: pendingPaymentsCount.toString(), trend: "Verifikasi Iuran", icon: AlertCircle, href: "/admin/keuangan" },
+    { title: "Verifikasi Iuran", value: pendingPaymentsCount.toString(), trend: "Pembayaran baru", icon: AlertCircle, href: "/admin/keuangan" },
+    { title: "Tamu Menginap", value: tamuHariIni.toString(), trend: "Buku tamu aktif", icon: Users, href: "/admin/tamu" },
+    { title: "Pinjam Fasilitas", value: pendingPinjamanCount.toString(), trend: "Butuh approval", icon: Tent, href: "/admin/fasilitas" },
   ];
 
   const suratTerbaru = suratList.slice(0, 3);
@@ -75,7 +81,45 @@ export default function AdminDashboard() {
         </Button>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {activeDarurat.length > 0 && (
+        <StaggerItem>
+          <div className="space-y-4">
+            {activeDarurat.map((darurat) => {
+              const DaruratIcon = darurat.jenis === "Kebakaran" ? Flame : darurat.jenis === "Medis" ? HeartPulse : ShieldAlert;
+              return (
+                <Card key={darurat.id} className="border-red-500 bg-red-50 shadow-xl shadow-red-900/10 rounded-2xl overflow-hidden relative">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-2xl -mr-10 -mt-10 animate-pulse"></div>
+                  <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+                    <div className="flex items-start sm:items-center gap-4">
+                      <div className="bg-red-500 text-white p-3 sm:p-4 rounded-2xl shadow-lg shadow-red-500/30 animate-bounce shrink-0">
+                        <Siren className="w-6 h-6 sm:w-8 sm:h-8" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="bg-red-200 text-red-800 text-xs font-extrabold px-2 py-0.5 rounded-full uppercase tracking-widest flex items-center gap-1">
+                            <DaruratIcon className="w-3 h-3" /> {darurat.jenis}
+                          </span>
+                          <span className="text-xs text-red-600 font-semibold">• {darurat.waktu}</span>
+                        </div>
+                        <h3 className="text-lg sm:text-xl font-extrabold text-red-900 leading-tight">DARURAT: {darurat.lokasi}</h3>
+                        <p className="text-sm font-medium text-red-700 mt-1">Pelapor: {darurat.pemohon}</p>
+                      </div>
+                    </div>
+                    <Button 
+                      onClick={() => selesaikanDarurat(darurat.id, "Kondisi telah ditangani dan kembali aman")}
+                      className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/30 font-bold rounded-xl h-12"
+                    >
+                      Tandai Kondusif
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </StaggerItem>
+      )}
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (

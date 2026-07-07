@@ -82,6 +82,63 @@ export interface Aduan {
   tanggapan?: string;
 }
 
+export interface Darurat {
+  id: number;
+  pemohon: string;
+  jenis: string;
+  lokasi: string;
+  waktu: string;
+  status: "Aktif" | "Selesai";
+  catatan?: string;
+}
+
+export interface Fasilitas {
+  id: number;
+  nama: string;
+  deskripsi: string;
+  totalStok: number;
+  tersedia: number;
+  foto?: string;
+}
+
+export interface Peminjaman {
+  id: number;
+  fasilitasId: number;
+  pemohon: string;
+  tanggalMulai: string;
+  tanggalSelesai: string;
+  jumlah: number;
+  keperluan: string;
+  status: "Menunggu" | "Disetujui" | "Ditolak" | "Selesai";
+}
+
+export interface Tamu {
+  id: number;
+  nama: string;
+  kendaraan: string;
+  platNomor: string;
+  tujuan: string;
+  waktuLapor: string;
+  durasiMenginap: number; // in days
+  fotoKtp?: string;
+}
+
+export interface PollingOption {
+  id: number;
+  teks: string;
+  votes: number;
+}
+
+export interface Polling {
+  id: number;
+  pertanyaan: string;
+  deskripsi: string;
+  opsi: PollingOption[];
+  tanggalBerakhir: string;
+  status: "Aktif" | "Selesai";
+  pemilih: string[]; // array of KK or usernames who voted
+}
+
 interface AppContextType {
   nominalIuran: number;
   iuranAktif: boolean;
@@ -112,8 +169,24 @@ interface AppContextType {
   aduanList: Aduan[];
   tambahAduan: (judul: string, deskripsi: string, kategori: string, pemohon: string, foto?: string) => void;
   updateStatusAduan: (id: number, status: "Diajukan" | "Diproses" | "Selesai" | "Ditolak", tanggapan?: string) => void;
+  daruratList: Darurat[];
+  triggerDarurat: (jenis: string, lokasi: string, pemohon: string) => void;
+  selesaikanDarurat: (id: number, catatan?: string) => void;
   updateWarga: (id: number, warga: Partial<Warga>) => void;
   hapusWarga: (id: number) => void;
+  
+  fasilitasList: Fasilitas[];
+  peminjamanList: Peminjaman[];
+  ajukanPinjaman: (fasilitasId: number, pemohon: string, tanggalMulai: string, tanggalSelesai: string, jumlah: number, keperluan: string) => void;
+  updateStatusPinjaman: (id: number, status: "Disetujui" | "Ditolak" | "Selesai") => void;
+
+  tamuList: Tamu[];
+  laporTamu: (nama: string, kendaraan: string, platNomor: string, tujuan: string, durasiMenginap: number) => void;
+
+  pollingList: Polling[];
+  buatPolling: (pertanyaan: string, deskripsi: string, opsiTeks: string[], tanggalBerakhir: string) => void;
+  votePolling: (pollingId: number, opsiId: number, pemilih: string) => void;
+
   isLoaded: boolean;
 }
 
@@ -175,6 +248,38 @@ const INITIAL_ADUAN: Aduan[] = [
   { id: 2, pemohon: "Ahmad Wijaya", judul: "Sampah Menumpuk di Depan Gapura", deskripsi: "Petugas kebersihan belum mengangkut sampah di depan gapura selama seminggu sehingga menimbulkan bau.", kategori: "Kebersihan", tanggal: "20 Jun 2026", status: "Selesai", tanggapan: "Sudah diangkut oleh truk sampah kelurahan pada tanggal 21 Juni." }
 ];
 
+const INITIAL_DARURAT: Darurat[] = [];
+
+const INITIAL_FASILITAS: Fasilitas[] = [
+  { id: 1, nama: "Tenda Terop", deskripsi: "Tenda ukuran 4x6 meter untuk acara warga", totalStok: 4, tersedia: 4 },
+  { id: 2, nama: "Kursi Lipat", deskripsi: "Kursi lipat besi", totalStok: 100, tersedia: 100 },
+  { id: 3, nama: "Proyektor & Layar", deskripsi: "Proyektor Epson beserta layar portable", totalStok: 1, tersedia: 1 },
+];
+
+const INITIAL_PEMINJAMAN: Peminjaman[] = [
+  { id: 1, fasilitasId: 1, pemohon: "Budi Santoso", tanggalMulai: "25 Jun 2026", tanggalSelesai: "26 Jun 2026", jumlah: 1, keperluan: "Hajatan keluarga", status: "Menunggu" }
+];
+
+const INITIAL_TAMU: Tamu[] = [
+  { id: 1, nama: "Joko Supriyanto", kendaraan: "Mobil", platNomor: "B 1234 XYZ", tujuan: "Rumah Budi Santoso (Blok A2 No 15)", waktuLapor: "18:30 WIB", durasiMenginap: 2 }
+];
+
+const INITIAL_POLLING: Polling[] = [
+  {
+    id: 1,
+    pertanyaan: "Pemilihan Lokasi Rapat RT Bulan Depan",
+    deskripsi: "Silakan pilih lokasi yang paling sesuai untuk rapat rutin RT bulan Juli 2026.",
+    opsi: [
+      { id: 1, teks: "Balai Warga", votes: 12 },
+      { id: 2, teks: "Fasum Lapangan Bulutangkis", votes: 5 },
+      { id: 3, teks: "Rumah Ketua RT", votes: 8 }
+    ],
+    tanggalBerakhir: "30 Jun 2026",
+    status: "Aktif",
+    pemilih: ["Budi Santoso", "Siti Aminah"]
+  }
+];
+
 export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [nominalIuran, setNominalIuranState] = useState(50000);
@@ -187,6 +292,13 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [transaksiList, setTransaksiList] = useState<Transaksi[]>(INITIAL_TRANSAKSI_LIST);
   const [notifications, setNotifications] = useState<Notification[]>(INITIAL_NOTIFICATIONS);
   const [aduanList, setAduanList] = useState<Aduan[]>(INITIAL_ADUAN);
+  const [daruratList, setDaruratList] = useState<Darurat[]>(INITIAL_DARURAT);
+  
+  const [fasilitasList, setFasilitasList] = useState<Fasilitas[]>(INITIAL_FASILITAS);
+  const [peminjamanList, setPeminjamanList] = useState<Peminjaman[]>(INITIAL_PEMINJAMAN);
+  const [tamuList, setTamuList] = useState<Tamu[]>(INITIAL_TAMU);
+  const [pollingList, setPollingList] = useState<Polling[]>(INITIAL_POLLING);
+  
   const [currentUser, setCurrentUser] = useState<UserSession | null>(null);
 
   // Load from localStorage on mount
@@ -237,6 +349,21 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
       const storedAduan = localStorage.getItem("wl_aduanList");
       if (storedAduan) setAduanList(JSON.parse(storedAduan));
+
+      const storedDarurat = localStorage.getItem("wl_daruratList");
+      if (storedDarurat) setDaruratList(JSON.parse(storedDarurat));
+
+      const storedFasilitas = localStorage.getItem("wl_fasilitasList");
+      if (storedFasilitas) setFasilitasList(JSON.parse(storedFasilitas));
+
+      const storedPeminjaman = localStorage.getItem("wl_peminjamanList");
+      if (storedPeminjaman) setPeminjamanList(JSON.parse(storedPeminjaman));
+
+      const storedTamu = localStorage.getItem("wl_tamuList");
+      if (storedTamu) setTamuList(JSON.parse(storedTamu));
+
+      const storedPolling = localStorage.getItem("wl_pollingList");
+      if (storedPolling) setPollingList(JSON.parse(storedPolling));
 
       const storedUser = sessionStorage.getItem("wl_currentUser") || localStorage.getItem("wl_currentUser");
       if (storedUser) setCurrentUser(JSON.parse(storedUser));
@@ -393,6 +520,166 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       return updated;
     });
     tambahNotifikasi("Warga", "Status Aduan Diperbarui", `Aduan "${judulAduan}" Anda telah diperbarui menjadi: ${status}.`);
+  };
+
+  const triggerDarurat = (jenis: string, lokasi: string, pemohon: string) => {
+    setDaruratList((prev) => {
+      const updated = [
+        {
+          id: Date.now(),
+          pemohon,
+          jenis,
+          lokasi,
+          waktu: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }) + " WIB",
+          status: "Aktif" as const,
+        },
+        ...prev
+      ];
+      saveToStorage("wl_daruratList", updated);
+      return updated;
+    });
+    tambahNotifikasi("Admin RT/RW", `DARURAT: ${jenis.toUpperCase()}!`, `${pemohon} menekan tombol darurat di ${lokasi}. Segera tindak lanjuti!`);
+    tambahNotifikasi("Warga", `Info Darurat: ${jenis}`, `Terdapat laporan darurat di ${lokasi}. Mohon warga sekitar waspada dan membantu jika memungkinkan.`);
+  };
+
+  const selesaikanDarurat = (id: number, catatan?: string) => {
+    let jenisDarurat = "";
+    setDaruratList((prev) => {
+      const updated = prev.map((d) => {
+        if (d.id === id) {
+          jenisDarurat = d.jenis;
+          return { ...d, status: "Selesai" as const, catatan };
+        }
+        return d;
+      });
+      saveToStorage("wl_daruratList", updated);
+      return updated;
+    });
+    tambahNotifikasi("Admin RT/RW", "Darurat Diselesaikan", `Kondisi darurat ${jenisDarurat} telah ditandai selesai.`);
+    tambahNotifikasi("Warga", "Kondisi Aman", `Kondisi darurat ${jenisDarurat} telah teratasi dan kembali kondusif.`);
+  };
+
+  const ajukanPinjaman = (fasilitasId: number, pemohon: string, tanggalMulai: string, tanggalSelesai: string, jumlah: number, keperluan: string) => {
+    let namaFasilitas = "";
+    setFasilitasList(prev => {
+      const target = prev.find(f => f.id === fasilitasId);
+      if (target) namaFasilitas = target.nama;
+      return prev;
+    });
+
+    setPeminjamanList((prev) => {
+      const updated = [
+        {
+          id: Date.now(),
+          fasilitasId,
+          pemohon,
+          tanggalMulai,
+          tanggalSelesai,
+          jumlah,
+          keperluan,
+          status: "Menunggu" as const
+        },
+        ...prev
+      ];
+      saveToStorage("wl_peminjamanList", updated);
+      return updated;
+    });
+    tambahNotifikasi("Admin RT/RW", "Pengajuan Pinjaman Baru", `${pemohon} mengajukan pinjaman ${jumlah} unit ${namaFasilitas}.`);
+  };
+
+  const updateStatusPinjaman = (id: number, status: "Disetujui" | "Ditolak" | "Selesai") => {
+    let targetPemohon = "";
+    let fasilitasId = 0;
+    let jumlahPinjam = 0;
+    let oldStatus = "";
+
+    setPeminjamanList((prev) => {
+      const updated = prev.map((p) => {
+        if (p.id === id) {
+          targetPemohon = p.pemohon;
+          fasilitasId = p.fasilitasId;
+          jumlahPinjam = p.jumlah;
+          oldStatus = p.status;
+          return { ...p, status };
+        }
+        return p;
+      });
+      saveToStorage("wl_peminjamanList", updated);
+      return updated;
+    });
+
+    // Update stock when approved or returned
+    if ((status === "Disetujui" && oldStatus !== "Disetujui") || (status === "Selesai" && oldStatus === "Disetujui")) {
+      setFasilitasList((prev) => {
+        const updated = prev.map((f) => {
+          if (f.id === fasilitasId) {
+            const stockChange = status === "Disetujui" ? -jumlahPinjam : jumlahPinjam;
+            return { ...f, tersedia: Math.max(0, f.tersedia + stockChange) };
+          }
+          return f;
+        });
+        saveToStorage("wl_fasilitasList", updated);
+        return updated;
+      });
+    }
+
+    tambahNotifikasi("Warga", "Status Pinjaman Fasilitas", `Pengajuan pinjaman Anda telah diubah menjadi: ${status}.`);
+  };
+
+  const laporTamu = (nama: string, kendaraan: string, platNomor: string, tujuan: string, durasiMenginap: number) => {
+    setTamuList((prev) => {
+      const updated = [
+        {
+          id: Date.now(),
+          nama,
+          kendaraan,
+          platNomor,
+          tujuan,
+          waktuLapor: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }) + " WIB",
+          durasiMenginap
+        },
+        ...prev
+      ];
+      saveToStorage("wl_tamuList", updated);
+      return updated;
+    });
+    tambahNotifikasi("Admin RT/RW", "Tamu Baru Dilaporkan", `Tamu atas nama ${nama} menginap di ${tujuan}.`);
+  };
+
+  const buatPolling = (pertanyaan: string, deskripsi: string, opsiTeks: string[], tanggalBerakhir: string) => {
+    setPollingList((prev) => {
+      const opsi = opsiTeks.map((teks, index) => ({ id: index + 1, teks, votes: 0 }));
+      const updated = [
+        {
+          id: Date.now(),
+          pertanyaan,
+          deskripsi,
+          opsi,
+          tanggalBerakhir,
+          status: "Aktif" as const,
+          pemilih: []
+        },
+        ...prev
+      ];
+      saveToStorage("wl_pollingList", updated);
+      return updated;
+    });
+    tambahNotifikasi("Warga", "Polling Baru Dibuat", `Terdapat polling baru: ${pertanyaan}`);
+  };
+
+  const votePolling = (pollingId: number, opsiId: number, pemilih: string) => {
+    setPollingList((prev) => {
+      const updated = prev.map((p) => {
+        if (p.id === pollingId) {
+          if (p.pemilih.includes(pemilih)) return p; // Already voted
+          const newOpsi = p.opsi.map(o => o.id === opsiId ? { ...o, votes: o.votes + 1 } : o);
+          return { ...p, opsi: newOpsi, pemilih: [...p.pemilih, pemilih] };
+        }
+        return p;
+      });
+      saveToStorage("wl_pollingList", updated);
+      return updated;
+    });
   };
 
   const tambahPengumuman = (judul: string, isi: string, tipe: string) => {
@@ -631,6 +918,18 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         aduanList,
         tambahAduan,
         updateStatusAduan,
+        daruratList,
+        triggerDarurat,
+        selesaikanDarurat,
+        fasilitasList,
+        peminjamanList,
+        ajukanPinjaman,
+        updateStatusPinjaman,
+        tamuList,
+        laporTamu,
+        pollingList,
+        buatPolling,
+        votePolling,
         isLoaded
       }}
     >
