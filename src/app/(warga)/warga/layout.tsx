@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 function WargaSkeleton() {
   return (
     <div className="min-h-screen flex flex-col max-w-md mx-auto bg-white">
-      <div className="bg-gradient-to-br from-blue-700 via-primary to-blue-900 p-8 pb-16 rounded-b-[2.5rem]">
+      <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-800 p-8 pb-16 rounded-b-[2.5rem]">
         <Skeleton className="h-7 w-48 bg-white/20 mb-2" />
         <Skeleton className="h-4 w-36 bg-white/20" />
       </div>
@@ -75,12 +75,12 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
   const pemohonNama = currentUser.desc.split(",")[0].trim();
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto shadow-2xl shadow-blue-900/10 relative bg-slate-50 overflow-hidden">
+    <div className="min-h-screen flex flex-col max-w-md mx-auto shadow-2xl shadow-emerald-900/10 relative bg-slate-50 overflow-hidden">
       {/* Ambient Mesh Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/20 rounded-full blur-[80px]"></div>
-        <div className="absolute top-[40%] right-[-10%] w-[50%] h-[50%] bg-purple-400/10 rounded-full blur-[100px]"></div>
-        <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[60%] bg-teal-300/10 rounded-full blur-[100px]"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-400/20 rounded-full blur-[80px]"></div>
+        <div className="absolute top-[40%] right-[-10%] w-[50%] h-[50%] bg-teal-400/10 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[60%] bg-green-300/10 rounded-full blur-[100px]"></div>
       </div>
       
       {/* Notification Panel Overlay */}
@@ -99,7 +99,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
             {unreadCount > 0 && (
               <button
                 onClick={() => { clearAllNotifikasi("Warga"); toast.success("Semua notifikasi ditandai dibaca."); }}
-                className="text-xs text-primary font-bold hover:underline"
+                className="text-xs text-emerald-600 font-bold hover:underline"
               >
                 Tandai dibaca
               </button>
@@ -116,7 +116,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
                   className={`p-2.5 rounded-xl transition-colors cursor-pointer text-xs ${
                     n.read
                       ? "bg-slate-50 text-slate-500"
-                      : "bg-blue-50/50 text-slate-800 font-medium hover:bg-blue-50 border-l-2 border-primary"
+                      : "bg-emerald-50/50 text-slate-800 font-medium hover:bg-emerald-50 border-l-2 border-emerald-500"
                   }`}
                 >
                   <div className="flex justify-between items-start">
@@ -140,7 +140,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowNotif(!showNotif)}
-            className="relative w-10 h-10 flex items-center justify-center text-slate-500 hover:text-primary rounded-full hover:bg-slate-100 transition-all"
+            className="relative w-10 h-10 flex items-center justify-center text-slate-500 hover:text-emerald-600 rounded-full hover:bg-slate-100 transition-all"
             aria-label="Buka notifikasi"
             aria-expanded={showNotif}
           >
@@ -152,7 +152,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
             )}
           </button>
           <Link href="/warga/profil" className="flex items-center gap-2" aria-label="Profil saya">
-            <div className="w-9 h-9 bg-gradient-to-br from-primary to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow ring-2 ring-white">
+            <div className="w-9 h-9 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow ring-2 ring-white">
               {pemohonNama.charAt(0)}
             </div>
           </Link>
@@ -176,20 +176,20 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
               aria-current={active ? "page" : undefined}
               className={`flex flex-col items-center justify-center w-full h-full gap-0.5 rounded-xl transition-all duration-200 ${
                 active
-                  ? "text-primary"
+                  ? "text-emerald-600"
                   : "text-slate-400 hover:text-slate-600"
               }`}
             >
               {/* Active indicator pill */}
               <div className={`relative flex items-center justify-center w-12 h-8 rounded-full transition-all duration-300 ${
-                active ? "bg-gradient-to-tr from-blue-100 to-indigo-50 shadow-inner" : ""
+                active ? "bg-gradient-to-tr from-emerald-100 to-teal-50 shadow-inner" : ""
               }`}>
                 <Icon className={`w-5 h-5 transition-transform duration-300 ${active ? "scale-110" : ""}`} />
                 {active && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
                 )}
               </div>
-              <span className={`text-[10px] font-semibold transition-all ${active ? "text-primary" : ""}`}>
+              <span className={`text-[10px] font-semibold transition-all ${active ? "text-emerald-600" : ""}`}>
                 {item.name}
               </span>
             </Link>

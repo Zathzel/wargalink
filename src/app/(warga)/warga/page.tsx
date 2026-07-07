@@ -40,7 +40,7 @@ export default function WargaHome() {
   return (
     <div className="flex flex-col min-h-screen bg-transparent pb-8">
       {/* Premium Greeting Banner */}
-      <div className="bg-gradient-to-br from-blue-600 via-primary to-indigo-800 text-white p-8 pb-16 rounded-b-[3rem] shadow-[0_20px_40px_-15px_rgba(29,78,216,0.3)] relative overflow-hidden">
+      <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-800 text-white p-8 pb-16 rounded-b-[3rem] shadow-[0_20px_40px_-15px_rgba(16,185,129,0.3)] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-72 h-72 bg-white/15 rounded-full blur-[80px] -mr-20 -mt-20 mix-blend-overlay"></div>
         <div className="absolute bottom-0 left-0 w-56 h-56 bg-sky-300/30 rounded-full blur-[60px] -ml-10 -mb-10 mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
@@ -56,93 +56,7 @@ export default function WargaHome() {
 
 
       <StaggerContainer className="px-5 -mt-8 space-y-6">
-        {/* Panic Button Darurat */}
-        <StaggerItem>
-          <Card className="border border-red-400/50 shadow-[0_20px_40px_-15px_rgba(225,29,72,0.4)] bg-gradient-to-r from-red-500 via-rose-600 to-red-600 rounded-[2rem] overflow-hidden text-white relative group">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white/20 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700"></div>
-            <CardContent className="p-5 flex items-center justify-between relative z-10">
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-red-400 rounded-2xl animate-ping opacity-40"></div>
-                  <div className="bg-white/20 backdrop-blur-md p-3.5 rounded-2xl shadow-inner relative z-10 border border-white/20">
-                    <Siren className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xl font-extrabold tracking-tight drop-shadow-md">TOMBOL DARURAT</p>
-                  <p className="text-[11px] font-semibold text-red-100/90 tracking-wide uppercase mt-0.5">Tekan jika butuh bantuan segera</p>
-                </div>
-              </div>
-              
-              <Dialog open={daruratOpen} onOpenChange={setDaruratOpen}>
-                <DialogTrigger render={
-                  <Button 
-                    variant="secondary" 
-                    className="bg-white text-red-600 hover:bg-red-50 font-extrabold shadow-lg rounded-xl h-12 px-6 active:scale-95 transition-all"
-                  />
-                }>
-                  LAPOR
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md bg-white border-red-100 w-[calc(100%-2rem)] max-w-sm rounded-2xl">
-                  <DialogHeader className="text-left">
-                    <DialogTitle className="text-red-600 flex items-center gap-2">
-                      <Siren className="w-5 h-5" /> Laporkan Keadaan Darurat
-                    </DialogTitle>
-                    <DialogDescription>
-                      Pilih jenis bantuan darurat yang Anda butuhkan. Pesan akan langsung dikirim ke Admin RT dan warga sekitar.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="grid grid-cols-1 gap-3 py-4">
-                    <Button 
-                      variant="outline" 
-                      className="h-16 justify-start px-4 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-all text-left rounded-xl"
-                      onClick={() => handleDarurat("Kebakaran")}
-                    >
-                      <div className="bg-red-100 p-2 rounded-lg mr-3 text-red-600">
-                        <Flame className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="font-bold">Kebakaran</div>
-                        <div className="text-xs text-slate-500 font-normal">Butuh pemadam atau air</div>
-                      </div>
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="h-16 justify-start px-4 border-blue-200 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 transition-all text-left rounded-xl"
-                      onClick={() => handleDarurat("Medis")}
-                    >
-                      <div className="bg-blue-100 p-2 rounded-lg mr-3 text-blue-600">
-                        <HeartPulse className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="font-bold">Medis / Ambulans</div>
-                        <div className="text-xs text-slate-500 font-normal">Kondisi kritis, butuh medis</div>
-                      </div>
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="h-16 justify-start px-4 border-amber-200 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-300 transition-all text-left rounded-xl"
-                      onClick={() => handleDarurat("Keamanan")}
-                    >
-                      <div className="bg-amber-100 p-2 rounded-lg mr-3 text-amber-600">
-                        <ShieldAlert className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="font-bold">Keamanan / Maling</div>
-                        <div className="text-xs text-slate-500 font-normal">Tindak kejahatan, curiga</div>
-                      </div>
-                    </Button>
-                  </div>
-                  <DialogFooter className="sm:justify-center">
-                    <Button variant="ghost" onClick={() => setDaruratOpen(false)} className="w-full text-slate-500 rounded-xl">
-                      Batal
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </CardContent>
-          </Card>
-        </StaggerItem>
+
 
         {/* Quick Action Card (Iuran) */}
         <StaggerItem>
@@ -249,10 +163,97 @@ export default function WargaHome() {
           </div>
         </StaggerItem>
 
+        {/* Panic Button Darurat - Moved down and resized */}
+        <StaggerItem>
+          <Card className="border border-red-300/60 shadow-[0_8px_30px_rgb(225,29,72,0.15)] bg-gradient-to-r from-red-50 to-rose-50 rounded-2xl overflow-hidden relative group">
+            <CardContent className="p-4 flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-red-400 rounded-xl animate-ping opacity-30"></div>
+                  <div className="bg-red-500 p-2.5 rounded-xl shadow-inner relative z-10">
+                    <Siren className="w-5 h-5 text-white" />
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm font-extrabold text-red-700 tracking-tight">Tombol Darurat</p>
+                  <p className="text-[10px] font-bold text-red-500/80 uppercase mt-0.5">Butuh bantuan segera?</p>
+                </div>
+              </div>
+              
+              <Dialog open={daruratOpen} onOpenChange={setDaruratOpen}>
+                <DialogTrigger render={
+                  <Button 
+                    size="sm"
+                    className="bg-red-600 text-white hover:bg-red-700 font-extrabold shadow-md rounded-xl px-4 active:scale-95 transition-all"
+                  />
+                }>
+                  LAPOR
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md bg-white border-red-100 w-[calc(100%-2rem)] max-w-sm rounded-2xl">
+                  <DialogHeader className="text-left">
+                    <DialogTitle className="text-red-600 flex items-center gap-2">
+                      <Siren className="w-5 h-5" /> Laporkan Keadaan Darurat
+                    </DialogTitle>
+                    <DialogDescription>
+                      Pilih jenis bantuan darurat yang Anda butuhkan. Pesan akan langsung dikirim ke Admin RT dan warga sekitar.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid grid-cols-1 gap-3 py-4">
+                    <Button 
+                      variant="outline" 
+                      className="h-16 justify-start px-4 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-all text-left rounded-xl"
+                      onClick={() => handleDarurat("Kebakaran")}
+                    >
+                      <div className="bg-red-100 p-2 rounded-lg mr-3 text-red-600">
+                        <Flame className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold">Kebakaran</div>
+                        <div className="text-xs text-slate-500 font-normal">Butuh pemadam atau air</div>
+                      </div>
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="h-16 justify-start px-4 border-blue-200 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 transition-all text-left rounded-xl"
+                      onClick={() => handleDarurat("Medis")}
+                    >
+                      <div className="bg-blue-100 p-2 rounded-lg mr-3 text-blue-600">
+                        <HeartPulse className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold">Medis / Ambulans</div>
+                        <div className="text-xs text-slate-500 font-normal">Kondisi kritis, butuh medis</div>
+                      </div>
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="h-16 justify-start px-4 border-amber-200 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-300 transition-all text-left rounded-xl"
+                      onClick={() => handleDarurat("Keamanan")}
+                    >
+                      <div className="bg-amber-100 p-2 rounded-lg mr-3 text-amber-600">
+                        <ShieldAlert className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold">Keamanan / Maling</div>
+                        <div className="text-xs text-slate-500 font-normal">Tindak kejahatan, curiga</div>
+                      </div>
+                    </Button>
+                  </div>
+                  <DialogFooter className="sm:justify-center">
+                    <Button variant="ghost" onClick={() => setDaruratOpen(false)} className="w-full text-slate-500 rounded-xl">
+                      Batal
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </CardContent>
+          </Card>
+        </StaggerItem>
+
         <StaggerItem>
           <div className="flex items-center justify-between pt-2 pb-2">
             <h3 className="font-bold text-slate-800 tracking-tight">Aktivitas Terakhir</h3>
-            <Link href="/warga/surat" className="text-xs text-primary font-bold flex items-center hover:underline">
+            <Link href="/warga/surat" className="text-xs text-emerald-600 font-bold flex items-center hover:underline">
               Lihat Semua <ArrowRight className="w-3 h-3 ml-1" />
             </Link>
           </div>
@@ -293,7 +294,7 @@ export default function WargaHome() {
         <StaggerItem>
           <div className="flex items-center justify-between pt-2 pb-2">
             <h3 className="font-bold text-slate-800 tracking-tight">Info Terbaru RT</h3>
-            <Link href="/warga/pengumuman" className="text-xs text-primary font-bold flex items-center hover:underline">
+            <Link href="/warga/pengumuman" className="text-xs text-emerald-600 font-bold flex items-center hover:underline">
               Lihat Semua <ArrowRight className="w-3 h-3 ml-1" />
             </Link>
           </div>
