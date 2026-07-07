@@ -115,35 +115,35 @@ export default function LandingPage() {
       ease: "sine.inOut"
     });
 
-    // 2. Parallax effect on Mouse Move for Hero Images
-    if (heroRef.current) {
-      const handleMouseMove = (e: MouseEvent) => {
-        const { clientX, clientY } = e;
-        const xPos = (clientX / window.innerWidth - 0.5) * 20;
-        const yPos = (clientY / window.innerHeight - 0.5) * 20;
+      // 2. Parallax effect on Mouse Move for Hero Images (Desktop only)
+      if (heroRef.current && window.innerWidth > 1024) {
+        const handleMouseMove = (e: MouseEvent) => {
+          const { clientX, clientY } = e;
+          const xPos = (clientX / window.innerWidth - 0.5) * 20;
+          const yPos = (clientY / window.innerHeight - 0.5) * 20;
 
-        gsap.to(".hero-desktop", {
-          x: xPos,
-          y: yPos,
-          rotateY: -5 + xPos * 0.1,
-          rotateX: 5 - yPos * 0.1,
-          duration: 1,
-          ease: "power2.out"
-        });
+          gsap.to(".hero-desktop", {
+            x: xPos,
+            y: yPos,
+            rotateY: -5 + xPos * 0.1,
+            rotateX: 5 - yPos * 0.1,
+            duration: 1,
+            ease: "power2.out"
+          });
 
-        gsap.to(".hero-mobile", {
-          x: -xPos * 1.5,
-          y: -yPos * 1.5,
-          rotateY: xPos * 0.2,
-          rotateX: -yPos * 0.2,
-          duration: 1,
-          ease: "power2.out"
-        });
-      };
+          gsap.to(".hero-mobile", {
+            x: -xPos * 1.5,
+            y: -yPos * 1.5,
+            rotateY: xPos * 0.2,
+            rotateX: -yPos * 0.2,
+            duration: 1,
+            ease: "power2.out"
+          });
+        };
 
-      window.addEventListener("mousemove", handleMouseMove);
-      return () => window.removeEventListener("mousemove", handleMouseMove);
-    }
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+      }
   }, { scope: container });
 
   useGSAP(() => {
@@ -234,22 +234,22 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
           
           {/* Left Side: Minimalist Text & CTA */}
-          <div className="flex-1 w-full text-left pt-10 lg:pt-0 lg:pr-10 relative z-30">
+          <div className="flex-1 w-full text-center lg:text-left pt-10 lg:pt-0 lg:pr-10 relative z-30 flex flex-col items-center lg:items-start">
             <div>
-              <div className="hero-line w-16 h-1.5 bg-emerald-500 mb-8 rounded-full shadow-lg shadow-emerald-500/40"></div>
+              <div className="hero-line w-16 h-1.5 bg-emerald-500 mb-6 lg:mb-8 rounded-full shadow-lg shadow-emerald-500/40 mx-auto lg:mx-0"></div>
               
-              <h2 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-black text-slate-800 tracking-tighter leading-[0.9] mb-8 overflow-hidden">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-black text-slate-800 tracking-tighter leading-[1] lg:leading-[0.9] mb-6 lg:mb-8 overflow-hidden">
                 <div className="hero-text pb-2">RT/RW</div>
                 <div className="hero-text text-transparent bg-clip-text bg-gradient-to-br from-emerald-500 to-teal-700">Era Baru.</div>
               </h2>
               
-              <p className="hero-desc text-lg text-slate-600 font-medium mb-10 max-w-sm leading-relaxed">
+              <p className="hero-desc text-base sm:text-lg text-slate-600 font-medium mb-8 lg:mb-10 max-w-sm mx-auto lg:mx-0 leading-relaxed px-4 lg:px-0">
                 Platform digital tanpa batas untuk mengelola warga, keuangan, dan aduan. Lupakan kertas, mulai langkah cerdas bersama ekosistem cerdas.
               </p>
               
               <div className="hero-btn">
                 <Link href="/login">
-                  <button className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-slate-900/30 transition-all hover:scale-105 active:scale-95 group">
+                  <button className="flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-base sm:text-lg shadow-2xl shadow-slate-900/30 transition-all hover:scale-105 active:scale-95 group mx-auto lg:mx-0 w-full sm:w-auto">
                     Eksplorasi Sekarang <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
                   </button>
                 </Link>
@@ -258,11 +258,11 @@ export default function LandingPage() {
           </div>
 
           {/* Right Side: Composition Image Showcase */}
-          <div className="hero-images flex-[1.4] w-full relative h-[450px] sm:h-[500px] lg:h-[700px] perspective-1000">
+          <div className="hero-images flex-[1.4] w-full relative h-[300px] sm:h-[400px] lg:h-[700px] perspective-1000 mt-8 lg:mt-0">
             
             {/* Desktop Dashboard */}
             <div
-              className="hero-desktop image-card absolute top-10 right-0 lg:-right-10 w-[85%] lg:w-[90%] rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/60 bg-white/40 backdrop-blur-md p-2 z-10"
+              className="hero-desktop image-card absolute top-5 lg:top-10 right-0 lg:-right-10 w-[85%] lg:w-[90%] rounded-2xl lg:rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/60 bg-white/40 backdrop-blur-md p-1.5 lg:p-2 z-10"
               style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-5deg) rotateX(5deg)' }}
             >
               <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
