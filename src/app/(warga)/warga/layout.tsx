@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, FileText, Wallet, Bell, User } from "lucide-react";
+import { Home, FileText, Wallet, Bell, User, ShoppingBag } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -39,8 +39,8 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
   const navigation = [
     { name: "Beranda", href: "/warga", icon: Home },
     { name: "Surat", href: "/warga/surat", icon: FileText },
+    { name: "Pasar", href: "/warga/umkm", icon: ShoppingBag },
     { name: "Iuran", href: "/warga/iuran", icon: Wallet },
-    { name: "Info", href: "/warga/pengumuman", icon: Bell },
     { name: "Profil", href: "/warga/profil", icon: User },
   ];
 

@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Users, FileText, Wallet, Bell, BarChart, LayoutDashboard, LogOut, Loader2, Menu, X, MessageSquare, Sun, Moon } from "lucide-react";
+import { Users, FileText, Wallet, Bell, BarChart, LayoutDashboard, LogOut, Loader2, Menu, X, MessageSquare, Sun, Moon, Store } from "lucide-react";
 import { toast } from "sonner";
 import { useApp } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     { name: "Surat Menyurat", href: "/admin/surat", icon: FileText },
     { name: "Iuran & Keuangan", href: "/admin/keuangan", icon: Wallet },
     { name: "Aduan Warga", href: "/admin/aduan", icon: MessageSquare, badge: true },
+    { name: "UMKM Warga", href: "/admin/umkm", icon: Store },
     { name: "Pengumuman", href: "/admin/pengumuman", icon: Bell },
     { name: "Laporan", href: "/admin/laporan", icon: BarChart },
   ];

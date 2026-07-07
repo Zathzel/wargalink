@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, Bell, Clock, FileText, ArrowRight, MessageSquare, Check, Calendar, Siren, Flame, ShieldAlert, HeartPulse, Tent, Users, PieChart } from "lucide-react";
+import { Wallet, Bell, Clock, FileText, ArrowRight, MessageSquare, Check, Calendar, Siren, Flame, ShieldAlert, HeartPulse, Tent, Users, PieChart, ShoppingBag } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -141,6 +141,12 @@ export default function WargaHome() {
                 <Bell className="w-6 h-6" />
               </div>
               <span className="text-xs font-bold text-slate-700 leading-tight">Info RT</span>
+            </Link>
+            <Link href="/warga/umkm" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
+              <div className="bg-gradient-to-br from-orange-100 to-orange-50 p-3 rounded-2xl text-orange-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <ShoppingBag className="w-6 h-6" />
+              </div>
+              <span className="text-xs font-bold text-slate-700 leading-tight">Pasar Warga</span>
             </Link>
             <Link href="/warga/fasilitas" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
               <div className="bg-gradient-to-br from-purple-100 to-purple-50 p-3 rounded-2xl text-purple-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
