@@ -118,7 +118,14 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className={`min-h-screen bg-transparent flex ${theme === "dark" ? "dark bg-slate-900" : "bg-slate-50"}`}>
+    <div className={`min-h-screen bg-transparent flex relative z-0 ${theme === "dark" ? "dark bg-[#0b0f19]" : "bg-slate-50/50"}`}>
+      {/* Ambient Mesh Gradients */}
+      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-500/20 dark:bg-blue-600/10 rounded-full blur-[120px] mix-blend-normal"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-indigo-500/20 dark:bg-indigo-600/10 rounded-full blur-[130px] mix-blend-normal"></div>
+        <div className="absolute top-[30%] left-[20%] w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-600/5 rounded-full blur-[100px] mix-blend-normal"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.04] dark:opacity-[0.02]"></div>
+      </div>
       {theme === "dark" && (
         <style dangerouslySetInnerHTML={{
           __html: `
@@ -210,9 +217,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         ` }} />
       )}
       {/* Desktop Floating Sidebar */}
-      <div className="hidden md:flex flex-col w-72 p-4 pr-0">
-        <aside className="flex-1 bg-white/80 backdrop-blur-xl border border-white/60 shadow-xl shadow-blue-900/5 rounded-3xl flex flex-col overflow-hidden">
-          <div className="h-20 flex items-center px-8 border-b border-white/50 bg-white/40">
+      <div className="hidden md:flex flex-col w-72 p-5 pr-0 z-10">
+        <aside className="flex-1 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl border border-white/80 dark:border-slate-700/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] flex flex-col overflow-hidden">
+          <div className="h-20 flex items-center px-8 border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
             <AppLogo className="mr-3 h-9 w-10" />
             <span className="text-xl font-extrabold text-slate-800 tracking-tight">WargaLink</span>
           </div>
@@ -234,7 +241,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Mobile Sidebar Sheet */}
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetContent side="left" className="w-72 p-0 bg-white border-r border-slate-200">
+        <SheetContent side="left" className="w-72 p-0 bg-white/95 dark:bg-[#1e293b]/95 backdrop-blur-3xl border-r border-slate-200/60 dark:border-slate-700/50">
           <SheetHeader className="h-20 flex flex-row items-center px-8 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
             <AppLogo className="mr-3 h-9 w-10" />
             <SheetTitle className="text-xl font-extrabold text-slate-800 tracking-tight">WargaLink</SheetTitle>
@@ -256,9 +263,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </Sheet>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden z-10 relative">
         {/* Header */}
-        <header className="h-20 m-4 mb-0 bg-white/80 backdrop-blur-xl border border-white/60 shadow-sm rounded-3xl flex items-center justify-between px-6 md:px-8 shrink-0 z-10">
+        <header className="h-20 mx-5 mt-5 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl border border-white/80 dark:border-slate-700/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)] rounded-[2rem] flex items-center justify-between px-6 md:px-8 shrink-0 z-20">
           <div className="flex items-center gap-4">
             {/* Hamburger for mobile */}
             <button

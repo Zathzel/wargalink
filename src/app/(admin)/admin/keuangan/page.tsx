@@ -144,28 +144,28 @@ export default function AdminKeuangan() {
 
       {/* Overview Cards */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="bg-emerald-50 border-emerald-200">
+        <Card className="border border-emerald-200/50 dark:border-emerald-900/50 bg-emerald-50/80 dark:bg-emerald-900/20 backdrop-blur-2xl shadow-[0_8px_30px_rgb(16,185,129,0.08)] rounded-[2rem]">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-emerald-800">Total Pemasukan (Bulan Ini)</CardTitle>
+            <CardTitle className="text-xs font-extrabold text-emerald-800 dark:text-emerald-400 uppercase tracking-widest">Total Pemasukan (Bulan Ini)</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-emerald-900">Rp {juniPemasukan.toLocaleString("id-ID")}</div>
+            <div className="text-3xl font-black text-emerald-900 dark:text-emerald-300">Rp {juniPemasukan.toLocaleString("id-ID")}</div>
           </CardContent>
         </Card>
-        <Card className="bg-red-50 border-red-200">
+        <Card className="border border-red-200/50 dark:border-red-900/50 bg-red-50/80 dark:bg-red-900/20 backdrop-blur-2xl shadow-[0_8px_30px_rgb(239,68,68,0.08)] rounded-[2rem]">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-red-800">Total Pengeluaran (Bulan Ini)</CardTitle>
+            <CardTitle className="text-xs font-extrabold text-red-800 dark:text-red-400 uppercase tracking-widest">Total Pengeluaran (Bulan Ini)</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-900">Rp {juniPengeluaran.toLocaleString("id-ID")}</div>
+            <div className="text-3xl font-black text-red-900 dark:text-red-300">Rp {juniPengeluaran.toLocaleString("id-ID")}</div>
           </CardContent>
         </Card>
-        <Card className="bg-blue-50 border-blue-200">
+        <Card className="border border-blue-200/50 dark:border-blue-900/50 bg-blue-50/80 dark:bg-blue-900/20 backdrop-blur-2xl shadow-[0_8px_30px_rgb(59,130,246,0.08)] rounded-[2rem]">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-blue-800">Saldo Kas RT</CardTitle>
+            <CardTitle className="text-xs font-extrabold text-blue-800 dark:text-blue-400 uppercase tracking-widest">Saldo Kas RT</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-900">Rp {saldoKas.toLocaleString("id-ID")}</div>
+            <div className="text-3xl font-black text-blue-900 dark:text-blue-300">Rp {saldoKas.toLocaleString("id-ID")}</div>
           </CardContent>
         </Card>
       </div>
@@ -173,9 +173,9 @@ export default function AdminKeuangan() {
       {/* Control Panel: Set Tarif & Catat Manual */}
       <div className="grid gap-6 md:grid-cols-2">
         {/* Panel Pengaturan Tarif */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+        <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+          <CardHeader className="border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
+            <CardTitle className="flex items-center gap-2 font-extrabold text-slate-800 text-lg">
               <Settings className="w-5 h-5 text-slate-600" />
               Atur Tarif Iuran Bulanan
             </CardTitle>
@@ -229,9 +229,9 @@ export default function AdminKeuangan() {
         </Card>
 
         {/* Panel Pencatatan Transaksi Manual */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+        <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+          <CardHeader className="border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
+            <CardTitle className="flex items-center gap-2 font-extrabold text-slate-800 text-lg">
               <Wallet className="w-5 h-5 text-slate-600" />
               Catat Pengeluaran & Pemasukan Manual
             </CardTitle>
@@ -282,13 +282,13 @@ export default function AdminKeuangan() {
       </div>
 
       {/* Verification Queue (Bukti Transfer) */}
-      <Card className="border-amber-200 shadow-amber-900/5 shadow-md">
-        <CardHeader className="bg-amber-50/50 py-4 flex flex-row justify-between items-center">
+      <Card className="border-amber-200/50 dark:border-amber-900/50 shadow-[0_8px_30px_rgb(245,158,11,0.08)] bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl rounded-[2rem] overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-amber-50/80 to-orange-50/80 dark:from-amber-900/30 dark:to-orange-900/30 py-5 flex flex-row justify-between items-center border-b border-amber-100/50 dark:border-amber-800/30">
           <div>
-            <CardTitle className="text-amber-800 font-bold">Verifikasi Pembayaran Iuran</CardTitle>
-            <p className="text-xs text-amber-600 font-medium">Pembayaran baru dari warga yang membutuhkan konfirmasi manual RT.</p>
+            <CardTitle className="text-amber-900 dark:text-amber-400 font-extrabold text-lg">Verifikasi Pembayaran Iuran</CardTitle>
+            <p className="text-xs text-amber-700 dark:text-amber-500 font-bold mt-1">Pembayaran baru dari warga yang membutuhkan konfirmasi manual RT.</p>
           </div>
-          <Badge className="bg-amber-100 text-amber-800 border-amber-200" variant="outline">
+          <Badge className="bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-400 border-amber-200/50 font-black px-3 py-1" variant="outline">
             {tagihanMenunggu.length} Pending
           </Badge>
         </CardHeader>
@@ -363,11 +363,11 @@ export default function AdminKeuangan() {
 
       {/* Arus Kas Chart & Warga Bills List */}
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Arus Kas (6 Bulan Terakhir)</CardTitle>
+        <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+          <CardHeader className="border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
+            <CardTitle className="font-extrabold text-slate-800">Arus Kas (6 Bulan Terakhir)</CardTitle>
           </CardHeader>
-          <CardContent className="h-[300px]">
+          <CardContent className="h-[300px] pt-6">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={transaksiBulanan}>
                 <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
@@ -380,10 +380,10 @@ export default function AdminKeuangan() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row justify-between items-center py-4">
-            <CardTitle className="text-base font-bold text-slate-800">Status Tagihan Iuran Warga (Juni 2026)</CardTitle>
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 rounded-xl text-xs font-semibold border-slate-200" onClick={handleExportTagihanCSV}>
+        <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+          <CardHeader className="flex flex-row justify-between items-center py-5 border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
+            <CardTitle className="text-base font-extrabold text-slate-800">Status Tagihan Iuran Warga (Juni 2026)</CardTitle>
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 rounded-xl text-xs font-bold border-slate-200 hover:bg-slate-100" onClick={handleExportTagihanCSV}>
               <Download className="w-3.5 h-3.5" />
               Ekspor CSV
             </Button>
@@ -440,13 +440,13 @@ export default function AdminKeuangan() {
       </div>
 
       {/* Riwayat Transaksi Buku Kas RT */}
-      <Card className="border border-slate-200/80 shadow-md">
-        <CardHeader className="flex flex-row justify-between items-center py-4">
+      <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+        <CardHeader className="flex flex-row justify-between items-center py-5 border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
           <div>
-            <CardTitle className="text-lg font-bold text-slate-800">Riwayat Transaksi Buku Kas RT</CardTitle>
-            <p className="text-xs text-slate-500 font-medium">Log historis pencatatan kas masuk dan kas keluar lingkungan RT.</p>
+            <CardTitle className="text-lg font-extrabold text-slate-800">Riwayat Transaksi Buku Kas RT</CardTitle>
+            <p className="text-xs text-slate-500 font-bold mt-1">Log historis pencatatan kas masuk dan kas keluar lingkungan RT.</p>
           </div>
-          <Button variant="outline" size="sm" className="flex items-center gap-1.5 rounded-xl text-xs font-semibold border-slate-200" onClick={handleExportKasCSV}>
+          <Button variant="outline" size="sm" className="flex items-center gap-1.5 rounded-xl text-xs font-bold border-slate-200 hover:bg-slate-100" onClick={handleExportKasCSV}>
             <Download className="w-3.5 h-3.5" />
             Ekspor CSV
           </Button>

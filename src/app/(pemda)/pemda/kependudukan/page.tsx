@@ -132,89 +132,89 @@ export default function PemdaKependudukan() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Data Kependudukan</h2>
-          <p className="text-slate-500">Agregat demografi wilayah dengan navigasi drill-down.</p>
+          <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Data Kependudukan</h2>
+          <p className="text-slate-500 dark:text-slate-400 font-bold">Agregat demografi wilayah dengan navigasi drill-down.</p>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-3">
-          <CardHeader className="border-b pb-4">
-            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+      <div className="grid gap-6 lg:grid-cols-3 relative z-10">
+        <Card className="lg:col-span-3 border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+          <CardHeader className="border-b border-white/50 dark:border-slate-700/50 pb-5 bg-white/40 dark:bg-slate-800/40">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
               <div>
-                <CardTitle className="flex items-center gap-2 text-lg">
+                <CardTitle className="flex items-center gap-2 text-lg font-black text-slate-800 dark:text-white">
                   {viewLevel !== "kecamatan" && (
                     <button 
                       onClick={handleBack}
-                      className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500 transition-colors mr-1"
+                      className="p-1.5 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg text-slate-500 dark:text-slate-400 transition-colors mr-1"
                       title="Kembali"
                     >
-                      <ChevronLeft className="w-4 h-4" />
+                      <ChevronLeft className="w-5 h-5" />
                     </button>
                   )}
                   {viewLevel === "kecamatan" && "Daftar Kecamatan"}
                   {viewLevel === "kelurahan" && `Kelurahan di ${selectedKecamatan}`}
                   {viewLevel === "rt" && `Rukun Tetangga (RT) di ${selectedKelurahan}`}
                 </CardTitle>
-                <CardDescription className="flex items-center gap-1.5 mt-1 text-xs">
+                <CardDescription className="flex items-center gap-1.5 mt-2 text-xs font-bold text-slate-500">
                   <span>Sistem Wilayah</span>
                   <ChevronRight className="w-3 h-3 text-slate-400" />
-                  <span className={viewLevel === "kecamatan" ? "font-bold text-blue-600" : ""}>Kota</span>
+                  <span className={viewLevel === "kecamatan" ? "font-extrabold text-emerald-600 dark:text-emerald-400" : ""}>Kota</span>
                   {selectedKecamatan && (
                     <>
                       <ChevronRight className="w-3 h-3 text-slate-400" />
-                      <span className={viewLevel === "kelurahan" ? "font-bold text-blue-600" : ""}>{selectedKecamatan}</span>
+                      <span className={viewLevel === "kelurahan" ? "font-extrabold text-emerald-600 dark:text-emerald-400" : ""}>{selectedKecamatan}</span>
                     </>
                   )}
                   {selectedKelurahan && (
                     <>
                       <ChevronRight className="w-3 h-3 text-slate-400" />
-                      <span className={viewLevel === "rt" ? "font-bold text-blue-600" : ""}>{selectedKelurahan}</span>
+                      <span className={viewLevel === "rt" ? "font-extrabold text-emerald-600 dark:text-emerald-400" : ""}>{selectedKelurahan}</span>
                     </>
                   )}
                 </CardDescription>
               </div>
 
               <div className="relative w-full sm:w-64">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+                <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
                 <Input 
                   placeholder={`Cari ${viewLevel === "rt" ? "RT/RW" : viewLevel === "kelurahan" ? "kelurahan" : "kecamatan"}...`}
-                  className="pl-9 text-xs" 
+                  className="pl-10 h-10 rounded-xl border-white/60 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 shadow-inner focus-visible:ring-2 focus-visible:ring-emerald-500/50 text-slate-800 dark:text-white font-medium text-xs" 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-4">
+          <CardContent className="p-0">
             <Table>
-              <TableHeader>
-                <TableRow>
+              <TableHeader className="bg-white/40 dark:bg-slate-800/40 border-b border-white/50 dark:border-slate-700/50">
+                <TableRow className="hover:bg-transparent">
                   {viewLevel === "kecamatan" && (
                     <>
-                      <TableHead>Nama Kecamatan</TableHead>
-                      <TableHead className="text-right">Jumlah Kelurahan</TableHead>
-                      <TableHead className="text-right">Jumlah RT Terdaftar</TableHead>
-                      <TableHead className="text-right">Total Penduduk</TableHead>
-                      <TableHead className="text-right">Aksi</TableHead>
+                      <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Nama Kecamatan</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Jumlah Kelurahan</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Jumlah RT Terdaftar</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Total Penduduk</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Aksi</TableHead>
                     </>
                   )}
                   {viewLevel === "kelurahan" && (
                     <>
-                      <TableHead>Nama Kelurahan</TableHead>
-                      <TableHead className="text-right">Jumlah RT</TableHead>
-                      <TableHead className="text-right">Total Penduduk</TableHead>
-                      <TableHead className="text-right">Aksi</TableHead>
+                      <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Nama Kelurahan</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Jumlah RT</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Total Penduduk</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Aksi</TableHead>
                     </>
                   )}
                   {viewLevel === "rt" && (
                     <>
-                      <TableHead>Nama RT</TableHead>
-                      <TableHead>Nama RW</TableHead>
-                      <TableHead>Status Keaktifan</TableHead>
-                      <TableHead className="text-right">Total Warga</TableHead>
+                      <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Nama RT</TableHead>
+                      <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Nama RW</TableHead>
+                      <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Status Keaktifan</TableHead>
+                      <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Total Warga</TableHead>
                     </>
                   )}
                 </TableRow>
@@ -222,7 +222,7 @@ export default function PemdaKependudukan() {
               <TableBody>
                 {currentList.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center text-slate-400 py-8 text-xs font-semibold">
+                    <TableCell colSpan={5} className="text-center text-slate-500 font-medium py-8 bg-white/20 dark:bg-slate-900/20 text-xs">
                       Tidak ada data wilayah yang ditemukan.
                     </TableCell>
                   </TableRow>
@@ -230,7 +230,7 @@ export default function PemdaKependudukan() {
                   currentList.map((item: any) => (
                     <TableRow 
                       key={item.id} 
-                      className={`hover:bg-slate-50/70 transition-colors ${viewLevel !== "rt" ? "cursor-pointer" : ""}`}
+                      className={`border-b border-white/40 dark:border-slate-700/40 hover:bg-white/40 dark:hover:bg-slate-800/40 transition-colors ${viewLevel !== "rt" ? "cursor-pointer" : ""}`}
                       onClick={() => {
                         if (viewLevel === "kecamatan") handleKecamatanClick(item.nama);
                         else if (viewLevel === "kelurahan") handleKelurahanClick(item.nama);
@@ -238,45 +238,45 @@ export default function PemdaKependudukan() {
                     >
                       {viewLevel === "kecamatan" && (
                         <>
-                          <TableCell className="font-bold text-slate-800">{item.nama}</TableCell>
-                          <TableCell className="text-right text-slate-500">{item.kelurahan}</TableCell>
-                          <TableCell className="text-right text-slate-500">{item.rt}</TableCell>
-                          <TableCell className="text-right font-semibold">{item.penduduk.toLocaleString('id-ID')}</TableCell>
+                          <TableCell className="font-black text-slate-800 dark:text-white">{item.nama}</TableCell>
+                          <TableCell className="text-right font-bold text-slate-500 dark:text-slate-400">{item.kelurahan}</TableCell>
+                          <TableCell className="text-right font-bold text-slate-500 dark:text-slate-400">{item.rt}</TableCell>
+                          <TableCell className="text-right font-black text-slate-800 dark:text-white">{item.penduduk.toLocaleString('id-ID')}</TableCell>
                           <TableCell className="text-right">
-                            <span className="text-xs text-blue-600 font-bold hover:underline">Buka Kelurahan →</span>
+                            <span className="text-[10px] uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-extrabold hover:underline">Buka Kelurahan →</span>
                           </TableCell>
                         </>
                       )}
                       {viewLevel === "kelurahan" && (
                         <>
-                          <TableCell className="font-bold text-slate-800">{item.nama}</TableCell>
-                          <TableCell className="text-right text-slate-500">{item.rt}</TableCell>
-                          <TableCell className="text-right font-semibold">{item.penduduk.toLocaleString('id-ID')}</TableCell>
+                          <TableCell className="font-black text-slate-800 dark:text-white">{item.nama}</TableCell>
+                          <TableCell className="text-right font-bold text-slate-500 dark:text-slate-400">{item.rt}</TableCell>
+                          <TableCell className="text-right font-black text-slate-800 dark:text-white">{item.penduduk.toLocaleString('id-ID')}</TableCell>
                           <TableCell className="text-right">
                             {dataRT[item.nama] ? (
-                              <span className="text-xs text-blue-600 font-bold hover:underline">Buka RT →</span>
+                              <span className="text-[10px] uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-extrabold hover:underline">Buka RT →</span>
                             ) : (
-                              <span className="text-xs text-slate-400 italic">RT Belum Terintegrasi</span>
+                              <span className="text-[10px] text-slate-400 font-bold italic">RT Belum Terintegrasi</span>
                             )}
                           </TableCell>
                         </>
                       )}
                       {viewLevel === "rt" && (
                         <>
-                          <TableCell className="font-bold text-slate-800 flex items-center gap-2">
-                            <Building2 className="w-4 h-4 text-slate-400" />
+                          <TableCell className="font-black text-slate-800 dark:text-white flex items-center gap-2">
+                            <Building2 className="w-4 h-4 text-emerald-500" />
                             {item.nama}
                           </TableCell>
-                          <TableCell className="text-slate-500 font-semibold">{item.RW}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400 font-bold">{item.RW}</TableCell>
                           <TableCell>
                             <Badge 
                               variant="outline" 
-                              className={item.status === "Aktif" ? "bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px]" : "bg-slate-100 text-slate-500 border-slate-200 text-[10px]"}
+                              className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md ${item.status === "Aktif" ? "bg-emerald-100/80 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-400 border-emerald-200/50" : "bg-slate-100/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200/50 dark:border-slate-700/50"}`}
                             >
                               {item.status}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-right font-extrabold text-slate-800">{item.penduduk.toLocaleString('id-ID')}</TableCell>
+                          <TableCell className="text-right font-black text-slate-800 dark:text-white">{item.penduduk.toLocaleString('id-ID')}</TableCell>
                         </>
                       )}
                     </TableRow>
@@ -288,12 +288,12 @@ export default function PemdaKependudukan() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3 relative z-10">
         {/* Gender Demographics */}
-        <Card className="border border-slate-100 shadow-xl shadow-slate-200/40 rounded-2xl bg-white/95">
+        <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem]">
           <CardHeader className="pb-1">
-            <CardTitle className="text-base font-bold text-slate-800">Demografi Gender</CardTitle>
-            <CardDescription className="text-xs">Rasio keseluruhan kota</CardDescription>
+            <CardTitle className="text-base font-black text-slate-800 dark:text-white">Demografi Gender</CardTitle>
+            <CardDescription className="text-xs font-bold text-slate-500">Rasio keseluruhan kota</CardDescription>
           </CardHeader>
           <CardContent className="h-[240px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -306,41 +306,42 @@ export default function PemdaKependudukan() {
                   outerRadius={75}
                   paddingAngle={4}
                   dataKey="value"
+                  stroke="none"
                 >
                   {dataGender.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={GENDER_COLORS[index % GENDER_COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={index === 0 ? '#10b981' : '#f59e0b'} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value: any) => `${Number(value).toLocaleString('id-ID')} Jiwa`} />
-                <Legend iconType="circle" wrapperStyle={{fontSize: '11px'}} />
+                <Tooltip formatter={(value: any) => `${Number(value).toLocaleString('id-ID')} Jiwa`} contentStyle={{borderRadius: '16px', border: '1px solid rgba(255,255,255,0.5)', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)', backgroundColor: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(10px)', fontWeight: 'bold'}} />
+                <Legend iconType="circle" wrapperStyle={{fontSize: '11px', fontWeight: 'bold'}} />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
         {/* Age Demographics */}
-        <Card className="border border-slate-100 shadow-xl shadow-slate-200/40 rounded-2xl bg-white/95">
+        <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem]">
           <CardHeader className="pb-1">
-            <CardTitle className="text-base font-bold text-slate-800">Kelompok Usia</CardTitle>
-            <CardDescription className="text-xs">Sebaran umur warga kota</CardDescription>
+            <CardTitle className="text-base font-black text-slate-800 dark:text-white">Kelompok Usia</CardTitle>
+            <CardDescription className="text-xs font-bold text-slate-500">Sebaran umur warga kota</CardDescription>
           </CardHeader>
           <CardContent className="h-[240px] pt-4">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataUsia} layout="vertical">
-                <XAxis type="number" stroke="#94a3b8" fontSize={9} tickLine={false} axisLine={false} />
-                <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={9} width={90} tickLine={false} axisLine={false} />
-                <Tooltip formatter={(value: any) => `${Number(value).toLocaleString('id-ID')} Jiwa`} />
-                <Bar dataKey="jumlah" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                <XAxis type="number" stroke="#94a3b8" fontSize={9} tickLine={false} axisLine={false} tick={{ fontWeight: 'bold' }} />
+                <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={9} width={90} tickLine={false} axisLine={false} tick={{ fontWeight: 'bold' }} />
+                <Tooltip formatter={(value: any) => `${Number(value).toLocaleString('id-ID')} Jiwa`} contentStyle={{borderRadius: '16px', border: '1px solid rgba(255,255,255,0.5)', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)', backgroundColor: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(10px)', fontWeight: 'bold'}} />
+                <Bar dataKey="jumlah" fill="#14b8a6" radius={[0, 6, 6, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
         {/* Occupation Demographics */}
-        <Card className="border border-slate-100 shadow-xl shadow-slate-200/40 rounded-2xl bg-white/95">
+        <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem]">
           <CardHeader className="pb-1">
-            <CardTitle className="text-base font-bold text-slate-800">Jenis Pekerjaan</CardTitle>
-            <CardDescription className="text-xs">Profil mata pencaharian warga kota</CardDescription>
+            <CardTitle className="text-base font-black text-slate-800 dark:text-white">Jenis Pekerjaan</CardTitle>
+            <CardDescription className="text-xs font-bold text-slate-500">Profil mata pencaharian warga kota</CardDescription>
           </CardHeader>
           <CardContent className="h-[240px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -353,13 +354,14 @@ export default function PemdaKependudukan() {
                   outerRadius={70}
                   paddingAngle={2}
                   dataKey="value"
+                  stroke="none"
                 >
                   {dataPekerjaan.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={WORK_COLORS[index % WORK_COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value: any) => `${Number(value).toLocaleString('id-ID')} Jiwa`} />
-                <Legend iconType="circle" layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{fontSize: '9px', lineHeight: '14px'}} />
+                <Tooltip formatter={(value: any) => `${Number(value).toLocaleString('id-ID')} Jiwa`} contentStyle={{borderRadius: '16px', border: '1px solid rgba(255,255,255,0.5)', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)', backgroundColor: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(10px)', fontWeight: 'bold'}} />
+                <Legend iconType="circle" layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{fontSize: '9px', lineHeight: '14px', fontWeight: 'bold'}} />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>

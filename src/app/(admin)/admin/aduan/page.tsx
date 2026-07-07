@@ -72,15 +72,15 @@ export default function AdminAduan() {
         <p className="text-slate-500">Tinjau keluhan, laporan kerusakan fasilitas, dan aspirasi dari warga RT.</p>
       </div>
 
-      <Card>
-        <CardHeader className="py-4 border-b">
+      <Card className="bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl border-white/80 dark:border-slate-700/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+        <CardHeader className="py-5 border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
           <div className="flex flex-col sm:flex-row gap-4 justify-between items-center w-full">
-            <h3 className="text-base font-bold text-slate-800">Daftar Laporan Masuk</h3>
+            <h3 className="text-base font-extrabold text-slate-800 tracking-tight">Daftar Laporan Masuk</h3>
             <div className="flex gap-3 w-full sm:w-auto">
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="flex h-9 rounded-md border border-slate-200 bg-white px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-slate-800 flex-1 sm:flex-none"
+                className="flex h-10 rounded-xl border border-white/60 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-slate-800 font-medium flex-1 sm:flex-none transition-all hover:bg-white/80"
               >
                 <option value="all">Semua Status</option>
                 <option value="Diajukan">Diajukan</option>
@@ -91,7 +91,7 @@ export default function AdminAduan() {
               <select
                 value={filterKategori}
                 onChange={(e) => setFilterKategori(e.target.value)}
-                className="flex h-9 rounded-md border border-slate-200 bg-white px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-slate-800 flex-1 sm:flex-none"
+                className="flex h-10 rounded-xl border border-white/60 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-slate-800 font-medium flex-1 sm:flex-none transition-all hover:bg-white/80"
               >
                 <option value="all">Semua Kategori</option>
                 <option value="Fasilitas Umum">Fasilitas Umum</option>
@@ -103,79 +103,81 @@ export default function AdminAduan() {
           </div>
         </CardHeader>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Tanggal</TableHead>
-                <TableHead>Pengirim</TableHead>
-                <TableHead>Judul Laporan</TableHead>
-                <TableHead>Kategori</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Aksi</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filtered.map((aduan) => (
-                <TableRow key={aduan.id} className="hover:bg-slate-50/50">
-                  <TableCell className="text-xs font-semibold text-slate-500">{aduan.tanggal}</TableCell>
-                  <TableCell className="font-semibold text-slate-700">{aduan.pemohon}</TableCell>
-                  <TableCell className="font-bold text-slate-800 max-w-[200px] truncate">{aduan.judul}</TableCell>
-                  <TableCell className="text-slate-600">{aduan.kategori}</TableCell>
-                  <TableCell>{getStatusBadge(aduan.status)}</TableCell>
-                  <TableCell className="text-right">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-primary hover:text-primary/80 flex items-center gap-1 ml-auto font-bold"
-                      onClick={() => handleOpenDetail(aduan)}
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      Tinjau
-                    </Button>
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader className="bg-white/40 dark:bg-slate-800/40">
+                <TableRow className="border-b-white/50 dark:border-b-slate-700/50 hover:bg-transparent">
+                  <TableHead className="font-extrabold text-slate-500 uppercase tracking-widest text-[11px] py-4">Tanggal</TableHead>
+                  <TableHead className="font-extrabold text-slate-500 uppercase tracking-widest text-[11px] py-4">Pengirim</TableHead>
+                  <TableHead className="font-extrabold text-slate-500 uppercase tracking-widest text-[11px] py-4">Judul Laporan</TableHead>
+                  <TableHead className="font-extrabold text-slate-500 uppercase tracking-widest text-[11px] py-4">Kategori</TableHead>
+                  <TableHead className="font-extrabold text-slate-500 uppercase tracking-widest text-[11px] py-4">Status</TableHead>
+                  <TableHead className="text-right font-extrabold text-slate-500 uppercase tracking-widest text-[11px] py-4">Aksi</TableHead>
                 </TableRow>
-              ))}
-              {filtered.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center text-slate-400 py-12">
-                    <MessageSquare className="w-12 h-12 text-slate-300 mx-auto mb-2" />
-                    <p className="font-semibold">Tidak ada aduan warga ditemukan.</p>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((aduan) => (
+                  <TableRow key={aduan.id} className="hover:bg-white/50 dark:hover:bg-slate-800/50 border-b-white/50 dark:border-b-slate-700/50 transition-colors">
+                    <TableCell className="text-xs font-bold text-slate-500">{aduan.tanggal}</TableCell>
+                    <TableCell className="font-extrabold text-slate-700">{aduan.pemohon}</TableCell>
+                    <TableCell className="font-extrabold text-slate-800 max-w-[200px] truncate">{aduan.judul}</TableCell>
+                    <TableCell className="text-xs font-bold text-slate-600 bg-slate-50/50 dark:bg-slate-900/50 px-2 py-1 rounded-md inline-block mt-2 border border-slate-100 dark:border-slate-700/50">{aduan.kategori}</TableCell>
+                    <TableCell>{getStatusBadge(aduan.status)}</TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-primary hover:text-primary hover:bg-blue-50/50 dark:hover:bg-blue-900/30 flex items-center gap-1.5 ml-auto font-bold rounded-xl"
+                        onClick={() => handleOpenDetail(aduan)}
+                      >
+                        <Eye className="w-4 h-4" />
+                        Tinjau
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {filtered.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center text-slate-400 py-12">
+                      <MessageSquare className="w-12 h-12 text-slate-300 mx-auto mb-2 opacity-50" />
+                      <p className="font-bold">Tidak ada aduan warga ditemukan.</p>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
       {/* Modal Tinjau Aduan */}
       <Dialog open={selectedAduan.open} onOpenChange={(open) => setSelectedAduan({ ...selectedAduan, open })}>
-        <DialogContent className="sm:max-w-md rounded-2xl bg-white">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] bg-white/95 dark:bg-[#1e293b]/95 backdrop-blur-3xl border border-white/60 dark:border-slate-700/50 shadow-2xl p-6 md:p-8">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-slate-800">Tinjau Laporan Warga</DialogTitle>
-            <DialogDescription>Keluhan lingkungan warga yang memerlukan respon RT.</DialogDescription>
+            <DialogTitle className="text-2xl font-extrabold text-slate-800 tracking-tight">Tinjau Laporan Warga</DialogTitle>
+            <DialogDescription className="font-medium">Keluhan lingkungan warga yang memerlukan respon RT.</DialogDescription>
           </DialogHeader>
 
           {selectedAduan.aduan && (
-            <div className="space-y-4 py-2">
+            <div className="space-y-5 py-2">
               <div className="flex justify-between items-center">
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">
+                <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest bg-slate-100/80 dark:bg-slate-800/80 px-3 py-1 rounded-md border border-slate-200/60 dark:border-slate-700/50 shadow-sm">
                   {selectedAduan.aduan.kategori}
                 </span>
-                <span className="text-xs text-slate-500 font-semibold">{selectedAduan.aduan.tanggal}</span>
+                <span className="text-[11px] text-slate-500 font-bold bg-white/50 dark:bg-black/20 px-2 py-1 rounded-md border border-slate-100 dark:border-slate-700/50">{selectedAduan.aduan.tanggal}</span>
               </div>
 
               <div>
-                <h4 className="text-lg font-black text-slate-800 leading-snug">{selectedAduan.aduan.judul}</h4>
-                <p className="text-xs text-slate-500 mt-0.5">Dilaporkan oleh: <strong className="text-slate-700">{selectedAduan.aduan.pemohon}</strong></p>
+                <h4 className="text-xl font-black text-slate-800 leading-snug tracking-tight">{selectedAduan.aduan.judul}</h4>
+                <p className="text-xs text-slate-500 mt-1 font-medium">Dilaporkan oleh: <strong className="text-slate-700 font-extrabold">{selectedAduan.aduan.pemohon}</strong></p>
               </div>
 
-              <div className="bg-slate-50 p-4 rounded-2xl border text-sm text-slate-600 leading-relaxed font-medium">
+              <div className="bg-slate-50/50 dark:bg-slate-900/30 p-5 rounded-[1.5rem] border border-slate-100/80 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium shadow-inner">
                 {selectedAduan.aduan.deskripsi}
               </div>
 
               {/* Image Attachment */}
-              <div className="bg-slate-100 rounded-2xl overflow-hidden border">
+              <div className="bg-slate-100/50 dark:bg-slate-800/30 rounded-[1.5rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/50 shadow-inner">
                 {selectedAduan.aduan.id === 1 ? (
                   <div className="relative w-full h-48">
                     <Image src="/foto_aduan_mati_lampu.png" alt="Lampu jalan mati" fill className="object-cover" />
@@ -185,29 +187,29 @@ export default function AdminAduan() {
                     <Image src="/foto_aduan_kamera_warga.png" alt="Sampah menumpuk" fill className="object-cover" />
                   </div>
                 ) : (
-                  <div className="p-4 border-dashed flex flex-col items-center justify-center text-slate-400 h-48">
-                    <AlertCircle className="w-8 h-8 text-slate-300 mb-1" />
-                    <span className="text-xs font-semibold">Tidak Ada Lampiran Gambar</span>
+                  <div className="p-4 flex flex-col items-center justify-center text-slate-400 h-48">
+                    <AlertCircle className="w-8 h-8 text-slate-300 mb-2 opacity-50" />
+                    <span className="text-[11px] font-extrabold tracking-widest uppercase">Tidak Ada Lampiran</span>
                   </div>
                 )}
               </div>
 
               {/* Status & Tanggapan input */}
-              <div className="space-y-3 pt-2 border-t">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Status Laporan</span>
+              <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                <div className="flex items-center justify-between bg-white/40 dark:bg-slate-800/40 p-3 rounded-2xl border border-white/60 dark:border-slate-700/50">
+                  <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">Status Laporan</span>
                   {getStatusBadge(selectedAduan.aduan.status)}
                 </div>
 
                 {selectedAduan.aduan.status !== "Selesai" && selectedAduan.aduan.status !== "Ditolak" ? (
                   <div className="space-y-2">
-                    <Label htmlFor="tanggapan" className="text-xs font-bold text-slate-500">Tanggapan Ketua RT</Label>
+                    <Label htmlFor="tanggapan" className="text-xs font-extrabold text-slate-600 ml-1">Tanggapan Ketua RT</Label>
                     <textarea
                       id="tanggapan"
                       placeholder="Tuliskan respon, solusi, atau alasan penolakan aduan di sini..."
                       value={tanggapanText}
                       onChange={(e) => setTanggapanText(e.target.value)}
-                      className="flex min-h-[80px] w-full rounded-md border border-slate-250 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring text-slate-800"
+                      className="flex min-h-[100px] w-full rounded-[1.5rem] border border-slate-200 bg-white/50 px-4 py-3 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 font-medium transition-all"
                     />
                   </div>
                 ) : (

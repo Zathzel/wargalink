@@ -42,29 +42,29 @@ export default function PemdaAuditLog() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Audit Log</h2>
-          <p className="text-slate-500">Rekam jejak aktivitas sistem dan pengguna (Security & Compliance).</p>
+          <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Audit Log</h2>
+          <p className="text-slate-500 dark:text-slate-400 font-bold">Rekam jejak aktivitas sistem dan pengguna (Security & Compliance).</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="flex items-center gap-2" onClick={handleFilter}>
-            <Filter className="w-4 h-4" /> Filter Log
+        <div className="flex gap-3">
+          <Button variant="outline" className="flex items-center gap-2 rounded-xl border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-sm transition-all h-10 font-bold text-slate-700 dark:text-slate-300" onClick={handleFilter}>
+            <Filter className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Filter Log
           </Button>
-          <Button className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700" onClick={handleExportCSV} disabled={exportLoading}>
+          <Button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 font-bold shadow-[0_8px_20px_-10px_rgba(16,185,129,0.5)] h-10 text-white transition-all hover:scale-105" onClick={handleExportCSV} disabled={exportLoading}>
             {exportLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
             Export CSV
           </Button>
         </div>
       </div>
 
-      <Card>
-        <CardHeader className="py-4 border-b">
+      <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden relative z-10">
+        <CardHeader className="py-5 border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
           <div className="relative w-full md:w-96">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
             <Input
               placeholder="Cari user, IP, atau aksi..."
-              className="pl-9"
+              className="pl-10 h-10 rounded-xl border-white/60 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 shadow-inner focus-visible:ring-2 focus-visible:ring-emerald-500/50 text-slate-800 dark:text-white font-medium"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -72,40 +72,40 @@ export default function PemdaAuditLog() {
         </CardHeader>
         <CardContent className="p-0">
           <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">User</TableHead>
-                <TableHead>Aktivitas</TableHead>
-                <TableHead>Level</TableHead>
-                <TableHead>Waktu</TableHead>
-                <TableHead className="text-right">IP Address</TableHead>
+            <TableHeader className="bg-white/40 dark:bg-slate-800/40 border-b border-white/50 dark:border-slate-700/50">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="w-[200px] font-extrabold text-slate-700 dark:text-slate-300">User</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Aktivitas</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Level</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Waktu</TableHead>
+                <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">IP Address</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.map((log) => (
-                <TableRow key={log.id}>
-                  <TableCell className="font-medium">{log.user}</TableCell>
-                  <TableCell>{log.aksi}</TableCell>
+                <TableRow key={log.id} className="border-b border-white/40 dark:border-slate-700/40 hover:bg-white/40 dark:hover:bg-slate-800/40 transition-colors">
+                  <TableCell className="font-black text-slate-800 dark:text-white">{log.user}</TableCell>
+                  <TableCell className="font-bold text-slate-600 dark:text-slate-300">{log.aksi}</TableCell>
                   <TableCell>
                     <Badge
                       variant="outline"
-                      className={
-                        log.level === "System" ? "bg-slate-100 text-slate-800 border-transparent" :
-                        log.level === "Info" ? "bg-blue-100 text-blue-800 border-transparent" :
-                        log.level === "Warning" ? "bg-amber-100 text-amber-800 border-transparent" :
-                        "bg-red-100 text-red-800 border-transparent"
-                      }
+                      className={`font-black uppercase tracking-widest px-2.5 py-1 rounded-md text-[10px] ${
+                        log.level === "System" ? "bg-slate-100/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200/50 dark:border-slate-700/50" :
+                        log.level === "Info" ? "bg-blue-100/80 dark:bg-blue-900/40 text-blue-800 dark:text-blue-400 border-blue-200/50" :
+                        log.level === "Warning" ? "bg-amber-100/80 dark:bg-amber-900/40 text-amber-800 dark:text-amber-400 border-amber-200/50" :
+                        "bg-red-100/80 dark:bg-red-900/40 text-red-800 dark:text-red-400 border-red-200/50"
+                      }`}
                     >
                       {log.level}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-slate-500 text-sm">{log.waktu}</TableCell>
-                  <TableCell className="text-right font-mono text-xs text-slate-500">{log.ip}</TableCell>
+                  <TableCell className="text-slate-500 dark:text-slate-400 text-xs font-bold">{log.waktu}</TableCell>
+                  <TableCell className="text-right font-mono text-xs font-semibold text-slate-500 dark:text-slate-400">{log.ip}</TableCell>
                 </TableRow>
               ))}
               {filtered.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-slate-500 py-8">Tidak ada log yang ditemukan.</TableCell>
+                  <TableCell colSpan={5} className="text-center text-slate-500 font-medium py-8 bg-white/20 dark:bg-slate-900/20">Tidak ada log yang ditemukan.</TableCell>
                 </TableRow>
               )}
             </TableBody>

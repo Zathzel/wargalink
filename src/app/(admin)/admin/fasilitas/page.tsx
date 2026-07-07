@@ -36,30 +36,30 @@ export default function AdminFasilitas() {
           
           return (
             <StaggerItem key={p.id}>
-              <Card className="border border-white/60 bg-white/80 backdrop-blur-sm shadow-lg shadow-slate-200/40 rounded-2xl overflow-hidden hover:shadow-xl transition-all">
+              <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
                 <CardContent className="p-0">
-                  <div className="p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div className="p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
                     <div className="flex items-start gap-4">
-                      <div className={`p-3 rounded-xl mt-1 ${isPending ? 'bg-amber-100 text-amber-600' : isApproved ? 'bg-blue-100 text-blue-600' : p.status === 'Selesai' ? 'bg-emerald-100 text-emerald-600' : 'bg-red-100 text-red-600'}`}>
-                        <Tent className="w-6 h-6" />
+                      <div className={`p-4 rounded-[1.2rem] mt-1 shadow-inner ${isPending ? 'bg-gradient-to-br from-amber-100 to-orange-50 text-amber-600 dark:from-amber-900/40 dark:to-orange-900/40 dark:text-amber-400' : isApproved ? 'bg-gradient-to-br from-blue-100 to-indigo-50 text-blue-600 dark:from-blue-900/40 dark:to-indigo-900/40 dark:text-blue-400' : p.status === 'Selesai' ? 'bg-gradient-to-br from-emerald-100 to-teal-50 text-emerald-600 dark:from-emerald-900/40 dark:to-teal-900/40 dark:text-emerald-400' : 'bg-gradient-to-br from-red-100 to-rose-50 text-red-600 dark:from-red-900/40 dark:to-rose-900/40 dark:text-red-400'}`}>
+                        <Tent className="w-7 h-7" />
                       </div>
                       <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-bold text-slate-800 text-lg">{fas?.nama}</h3>
-                          <span className="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <h3 className="font-extrabold text-slate-800 tracking-tight text-lg leading-none">{fas?.nama}</h3>
+                          <span className="bg-purple-100/80 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-black px-2.5 py-0.5 rounded-md border border-purple-200/50 dark:border-purple-800/30">
                             x{p.jumlah}
                           </span>
                         </div>
-                        <p className="text-sm font-medium text-slate-600 mb-1">Pemohon: {p.pemohon}</p>
-                        <p className="text-xs text-slate-500">{p.tanggalMulai} - {p.tanggalSelesai}</p>
-                        <p className="text-xs text-slate-400 mt-2 flex items-center gap-1 bg-slate-50 p-2 rounded-lg border">
-                          <Info className="w-3.5 h-3.5" /> Keperluan: {p.keperluan}
+                        <p className="text-sm font-semibold text-slate-600 mb-1">Pemohon: <span className="font-extrabold text-slate-700">{p.pemohon}</span></p>
+                        <p className="text-[11px] font-bold text-slate-400 bg-white/50 dark:bg-black/20 px-2 py-0.5 rounded-md inline-block border border-slate-100 dark:border-slate-700/50 mb-2">{p.tanggalMulai} - {p.tanggalSelesai}</p>
+                        <p className="text-xs text-slate-500 font-medium flex items-center gap-1.5 bg-slate-50/50 dark:bg-slate-900/30 px-3 py-2 rounded-xl border border-slate-100/80 dark:border-slate-700/50 shadow-inner">
+                          <Info className="w-4 h-4 text-slate-400" /> Keperluan: {p.keperluan}
                         </p>
                       </div>
                     </div>
                     
-                    <div className="flex flex-col md:items-end w-full md:w-auto gap-3">
-                      <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-full border">
+                    <div className="flex flex-col md:items-end w-full md:w-auto gap-3 shrink-0">
+                      <div className="flex items-center gap-1.5 bg-white/80 dark:bg-slate-800/80 px-4 py-2 rounded-xl border border-white/60 dark:border-slate-700/50 shadow-sm">
                         {isApproved ? (
                           <CheckCircle2 className="w-4 h-4 text-blue-500" />
                         ) : p.status === "Selesai" ? (
@@ -69,20 +69,20 @@ export default function AdminFasilitas() {
                         ) : (
                           <Clock className="w-4 h-4 text-amber-500" />
                         )}
-                        <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">{p.status}</span>
+                        <span className="text-[10px] font-extrabold text-slate-600 uppercase tracking-widest">{p.status}</span>
                       </div>
 
                       {isPending && (
                         <div className="flex gap-2 w-full md:w-auto">
                           <Button 
                             variant="outline" 
-                            className="flex-1 md:flex-none border-red-200 text-red-600 hover:bg-red-50 rounded-xl"
+                            className="flex-1 md:flex-none h-10 border-red-200/60 dark:border-red-900/50 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl font-bold shadow-sm"
                             onClick={() => updateStatusPinjaman(p.id, "Ditolak")}
                           >
                             Tolak
                           </Button>
                           <Button 
-                            className="flex-1 md:flex-none bg-purple-600 hover:bg-purple-700 text-white rounded-xl shadow-lg shadow-purple-600/20"
+                            className="flex-1 md:flex-none h-10 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl shadow-[0_8px_20px_-10px_rgba(147,51,234,0.5)] font-bold px-6"
                             onClick={() => updateStatusPinjaman(p.id, "Disetujui")}
                           >
                             Setujui
@@ -92,7 +92,7 @@ export default function AdminFasilitas() {
 
                       {isApproved && (
                         <Button 
-                          className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-lg shadow-emerald-600/20"
+                          className="w-full md:w-auto h-10 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl shadow-[0_8px_20px_-10px_rgba(16,185,129,0.5)] font-bold px-6"
                           onClick={() => updateStatusPinjaman(p.id, "Selesai")}
                         >
                           Tandai Dikembalikan

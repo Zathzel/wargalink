@@ -156,44 +156,44 @@ export default function AdminPolling() {
 
             return (
               <StaggerItem key={polling.id}>
-                <Card className="border border-white/60 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-lg transition-all rounded-2xl overflow-hidden h-full flex flex-col">
-                  <CardHeader className="bg-rose-50/50 pb-4 border-b border-rose-100/50">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle className="text-lg font-bold text-slate-800 leading-tight mb-1">{polling.pertanyaan}</CardTitle>
-                        <p className="text-xs text-slate-500 line-clamp-2">{polling.deskripsi}</p>
+                <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 rounded-[2rem] overflow-hidden h-full flex flex-col group">
+                  <CardHeader className="bg-gradient-to-br from-rose-50/80 to-pink-50/80 dark:from-rose-900/30 dark:to-pink-900/30 pb-5 border-b border-rose-100/50 dark:border-rose-900/30">
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg font-extrabold text-slate-800 dark:text-white leading-tight mb-1.5 group-hover:text-rose-700 dark:group-hover:text-rose-400 transition-colors">{polling.pertanyaan}</CardTitle>
+                        <p className="text-xs font-medium text-slate-500 line-clamp-2">{polling.deskripsi}</p>
                       </div>
-                      <div className="bg-white p-2 rounded-xl shadow-sm text-rose-600 shrink-0 border border-rose-50">
-                        <PieChart className="w-5 h-5" />
+                      <div className="bg-white/80 dark:bg-slate-800/80 p-3 rounded-[1.2rem] shadow-sm text-rose-600 dark:text-rose-400 shrink-0 border border-white dark:border-slate-700 group-hover:scale-110 transition-transform duration-300">
+                        <PieChart className="w-6 h-6" />
                       </div>
                     </div>
-                    <div className="flex items-center justify-between mt-3">
+                    <div className="flex items-center justify-between mt-4 bg-white/40 dark:bg-black/20 p-2 rounded-xl">
                       <div className="flex items-center gap-2">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${isClosed ? 'bg-slate-200 text-slate-600' : 'bg-rose-100 text-rose-700'}`}>
+                        <span className={`text-[9px] font-black px-2.5 py-1 rounded-md uppercase tracking-widest ${isClosed ? 'bg-slate-200/80 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300' : 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-sm'}`}>
                           {polling.status}
                         </span>
-                        <span className="text-[11px] font-medium text-slate-500 flex items-center gap-1">
+                        <span className="text-[10px] font-bold text-slate-500 flex items-center gap-1">
                           <Clock className="w-3 h-3" /> Berakhir: {polling.tanggalBerakhir}
                         </span>
                       </div>
-                      <span className="text-[11px] font-bold text-rose-600 bg-white px-2 py-1 rounded-md border border-rose-100">
-                        Total Suara: {totalVotes}
+                      <span className="text-[10px] font-black text-rose-700 dark:text-rose-300 bg-rose-100/80 dark:bg-rose-900/40 px-2.5 py-1 rounded-md border border-rose-200/50">
+                        {totalVotes} Suara
                       </span>
                     </div>
                   </CardHeader>
-                  <CardContent className="p-5 flex-1">
+                  <CardContent className="p-6 flex-1 bg-white/30 dark:bg-slate-900/20">
                     <div className="space-y-4">
                       {polling.opsi.map((opt) => {
                         const percentage = totalVotes > 0 ? Math.round((opt.votes / totalVotes) * 100) : 0;
                         return (
-                          <div key={opt.id} className="space-y-1.5 relative">
+                          <div key={opt.id} className="space-y-2 relative group/opt">
                             <div className="flex justify-between items-center z-10 relative">
-                              <span className="font-semibold text-sm text-slate-700">{opt.teks}</span>
-                              <span className="text-xs font-bold text-slate-600">{percentage}% ({opt.votes})</span>
+                              <span className="font-bold text-sm text-slate-700 dark:text-slate-300">{opt.teks}</span>
+                              <span className="text-[11px] font-extrabold text-slate-600 dark:text-slate-400 bg-white/50 dark:bg-slate-800/50 px-2 py-0.5 rounded border border-slate-200/50 dark:border-slate-700/50">{percentage}% ({opt.votes})</span>
                             </div>
-                            <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-2.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden shadow-inner">
                               <div 
-                                className={`h-full rounded-full transition-all duration-1000 ease-out ${percentage >= 50 ? 'bg-emerald-500' : percentage > 0 ? 'bg-rose-400' : 'bg-slate-300'}`} 
+                                className={`h-full rounded-full transition-all duration-1000 ease-out ${percentage >= 50 ? 'bg-gradient-to-r from-emerald-400 to-emerald-500' : percentage > 0 ? 'bg-gradient-to-r from-rose-400 to-rose-500' : 'bg-slate-300 dark:bg-slate-600'}`} 
                                 style={{ width: `${percentage}%` }}
                               ></div>
                             </div>

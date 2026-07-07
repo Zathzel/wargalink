@@ -143,48 +143,48 @@ export default function AdminWarga() {
           <p className="text-slate-500">Kelola daftar warga berdasarkan Kartu Keluarga (KK).</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" className="flex items-center gap-2 rounded-xl" onClick={handleExportCSV}>
-            <Download className="w-4 h-4" />
-            Ekspor CSV
+          <Button variant="outline" className="flex items-center gap-2 rounded-xl border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-sm transition-all h-10" onClick={handleExportCSV}>
+            <Download className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+            <span className="font-bold text-slate-700 dark:text-slate-300">Ekspor CSV</span>
           </Button>
-          <Button className="flex items-center gap-2 rounded-xl shadow-lg shadow-blue-500/10" onClick={() => setOpenTambah(true)}>
-            <Plus className="w-4 h-4" />
+          <Button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 font-bold shadow-[0_8px_20px_-10px_rgba(59,130,246,0.5)] h-10" onClick={() => setOpenTambah(true)}>
+            <Plus className="w-5 h-5" />
             Tambah Warga Baru
           </Button>
         </div>
       </div>
 
-      <Card>
-        <CardHeader className="py-4">
+      <Card className="border border-white/80 dark:border-slate-700/50 bg-white/60 dark:bg-[#1e293b]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden">
+        <CardHeader className="py-5 border-b border-white/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40">
           <div className="flex flex-col md:flex-row gap-4 justify-between items-center w-full">
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+              <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
               <Input
                 placeholder="Cari nama atau NIK..."
-                className="pl-9"
+                className="pl-10 h-10 rounded-xl border-white/60 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 shadow-inner focus-visible:ring-2 focus-visible:ring-primary/50 text-slate-800 dark:text-white font-medium"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <div className="flex flex-wrap gap-3 w-full md:w-auto items-center">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-semibold text-slate-500 whitespace-nowrap">Status:</span>
+            <div className="flex flex-wrap gap-4 w-full md:w-auto items-center">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap">Status:</span>
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="flex h-9 rounded-md border border-slate-200 bg-white px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-slate-800"
+                  className="flex h-10 rounded-xl border border-white/60 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 px-3 py-1 text-sm shadow-inner focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-slate-800 font-bold"
                 >
                   <option value="all">Semua Status</option>
                   <option value="Tetap">Tetap</option>
                   <option value="Kontrak">Kontrak</option>
                 </select>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-semibold text-slate-500 whitespace-nowrap">RT:</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap">RT:</span>
                 <select
                   value={filterRT}
                   onChange={(e) => setFilterRT(e.target.value)}
-                  className="flex h-9 rounded-md border border-slate-200 bg-white px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-slate-800"
+                  className="flex h-10 rounded-xl border border-white/60 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 px-3 py-1 text-sm shadow-inner focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-slate-800 font-bold"
                 >
                   <option value="all">Semua RT</option>
                   <option value="01">RT 01</option>
@@ -194,35 +194,39 @@ export default function AdminWarga() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nama Lengkap</TableHead>
-                <TableHead>No. KK</TableHead>
-                <TableHead>NIK</TableHead>
-                <TableHead>RT</TableHead>
-                <TableHead>Status Domisili</TableHead>
-                <TableHead className="text-right">Aksi</TableHead>
+            <TableHeader className="bg-white/40 dark:bg-slate-800/40 border-b border-white/50 dark:border-slate-700/50">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Nama Lengkap</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">No. KK</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">NIK</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">RT</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Status Domisili</TableHead>
+                <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Aksi</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.map((warga) => (
-                <TableRow key={warga.id}>
-                  <TableCell className="font-medium">{warga.nama}</TableCell>
-                  <TableCell className="text-slate-500">{warga.kk}</TableCell>
-                  <TableCell className="text-slate-500">{warga.nik}</TableCell>
-                  <TableCell>RT {warga.rt}</TableCell>
+                <TableRow key={warga.id} className="border-b border-white/40 dark:border-slate-700/40 hover:bg-white/40 dark:hover:bg-slate-800/40 transition-colors">
+                  <TableCell className="font-black text-slate-800 dark:text-white">{warga.nama}</TableCell>
+                  <TableCell className="text-slate-500 dark:text-slate-400 font-mono text-xs font-semibold">{warga.kk}</TableCell>
+                  <TableCell className="text-slate-500 dark:text-slate-400 font-mono text-xs font-semibold">{warga.nik}</TableCell>
                   <TableCell>
-                    <Badge variant={warga.status === "Tetap" ? "default" : "secondary"}>
+                    <Badge variant="outline" className="bg-slate-100/50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-slate-200/50 dark:border-slate-700/50 font-bold">
+                      RT {warga.rt}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge className={warga.status === "Tetap" ? "bg-emerald-100/80 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-400 hover:bg-emerald-100/80 dark:hover:bg-emerald-900/40 border-0" : "bg-blue-100/80 dark:bg-blue-900/40 text-blue-800 dark:text-blue-400 hover:bg-blue-100/80 dark:hover:bg-blue-900/40 border-0"}>
                       {warga.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right flex justify-end gap-1.5">
+                  <TableCell className="text-right flex justify-end gap-2">
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-primary hover:text-primary/80 h-8 font-bold"
+                      className="text-primary hover:text-primary hover:bg-blue-50 dark:hover:bg-blue-900/30 h-9 font-bold rounded-xl transition-all hover:scale-105"
                       onClick={() => setOpenDetail({ open: true, warga })}
                     >
                       Detail
@@ -230,7 +234,7 @@ export default function AdminWarga() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-amber-600 hover:text-amber-700 h-8 w-8 hover:bg-amber-50"
+                      className="text-amber-600 hover:text-amber-700 h-9 w-9 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-xl transition-all hover:scale-105"
                       onClick={() => startEdit(warga)}
                     >
                       <Edit className="w-4 h-4" />
@@ -238,7 +242,7 @@ export default function AdminWarga() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-red-600 hover:text-red-700 h-8 w-8 hover:bg-red-50"
+                      className="text-red-600 hover:text-red-700 h-9 w-9 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-xl transition-all hover:scale-105"
                       onClick={() => handleDeleteWarga(warga.id, warga.nama)}
                     >
                       <Trash2 className="w-4 h-4" />
@@ -248,7 +252,7 @@ export default function AdminWarga() {
               ))}
               {filtered.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center text-slate-500 py-8">Tidak ada data yang ditemukan.</TableCell>
+                  <TableCell colSpan={6} className="text-center text-slate-500 font-medium py-8 bg-white/20 dark:bg-slate-900/20">Tidak ada data yang ditemukan.</TableCell>
                 </TableRow>
               )}
             </TableBody>
