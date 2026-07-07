@@ -175,11 +175,12 @@ export default function LandingPage() {
         ease: "power2.out"
       }, 0);
 
-      // Parallax effect on image inside feature
-      const imgTarget = imgCol?.querySelector("img");
-      if (imgTarget) {
-        gsap.to(imgTarget, {
-          yPercent: 15,
+      // Parallax effect on decorative background instead of image
+      const bgTarget = imgCol?.querySelector(".bg-gradient-to-tr");
+      if (bgTarget) {
+        gsap.to(bgTarget, {
+          yPercent: 10,
+          rotation: 6,
           ease: "none",
           scrollTrigger: {
             trigger: row,
@@ -359,13 +360,13 @@ export default function LandingPage() {
               {/* Image Showcase */}
               <div className="feature-image flex-1 w-full max-w-lg lg:max-w-none relative">
                 <div className="absolute inset-0 bg-gradient-to-tr from-emerald-100 to-teal-50 rounded-[3rem] transform rotate-3 scale-[1.05] shadow-inner"></div>
-                <div className="relative rounded-[2.5rem] overflow-hidden border-8 border-white shadow-2xl bg-slate-100 h-[500px]">
+                <div className="relative rounded-[2.5rem] overflow-hidden border-8 border-white shadow-2xl bg-slate-100">
                   <Image 
                     src={feature.image}
                     alt={feature.title}
                     width={1000}
                     height={2000}
-                    className="w-full h-[150%] object-cover object-top origin-top"
+                    className="w-full h-auto object-contain"
                   />
                   {/* Glass overlay reflection */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 pointer-events-none transform -translate-x-full" style={{ transition: 'all 1.5s ease' }}></div>
