@@ -41,29 +41,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans selection:bg-emerald-200 overflow-hidden">
-      {/* Navigation */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-xl border-b border-white/50 shadow-sm transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-              <AppLogo className="w-6 h-6 text-white" />
-            </div>
-            <span className="font-extrabold text-xl text-slate-800 tracking-tight">WargaLink</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/login" className="hidden sm:block text-slate-600 hover:text-emerald-600 font-bold text-sm transition-colors">
-              Pusat Bantuan
-            </Link>
-            <Link href="/login">
-              <button className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold shadow-md transition-all active:scale-95 text-sm">
-                Masuk <LogIn className="w-4 h-4" />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+    <>
       {/* Hero Section - Unique Asymmetrical Layout */}
       <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-slate-50">
         {/* Giant Background Text */}
@@ -270,28 +248,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3 opacity-50 hover:opacity-100 transition-opacity">
-              <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center">
-                <AppLogo className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-slate-200 tracking-tight text-lg">WargaLink</span>
-            </div>
-            <div className="flex gap-6 text-sm font-semibold">
-              <a href="#" className="hover:text-emerald-400 transition-colors">Tentang Kami</a>
-              <a href="#" className="hover:text-emerald-400 transition-colors">Kebijakan Privasi</a>
-              <a href="#" className="hover:text-emerald-400 transition-colors">Hubungi Kami</a>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-slate-800/50 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
-            <p>&copy; {new Date().getFullYear()} WargaLink. Seluruh hak cipta dilindungi.</p>
-            <p className="mt-2 md:mt-0">Dibuat dengan ❤️ untuk Indonesia</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }
