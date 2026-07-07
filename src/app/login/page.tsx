@@ -235,9 +235,37 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <p className="mt-10 text-center text-sm font-medium text-slate-500 form-element">
+            <p className="mt-8 text-center text-sm font-medium text-slate-500 form-element">
               Butuh akses akun? <a href="#" className="text-emerald-600 font-bold hover:underline">Hubungi Ketua RT Anda</a>
             </p>
+
+            {/* Quick Access Demo */}
+            <div className="mt-10 pt-8 border-t border-slate-100 form-element">
+              <p className="text-xs font-bold text-slate-400 text-center uppercase tracking-widest mb-4">Akses Cepat Demo</p>
+              <div className="grid grid-cols-3 gap-3">
+                <button
+                  type="button"
+                  onClick={() => { setUsername("adminrt123"); setPassword("wargalink123"); }}
+                  className="px-3 py-2.5 rounded-xl bg-blue-50 text-blue-700 font-bold text-xs hover:bg-blue-100 border border-blue-200/50 transition-colors"
+                >
+                  Admin RT
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setUsername("warga123"); setPassword("wargalink123"); }}
+                  className="px-3 py-2.5 rounded-xl bg-emerald-50 text-emerald-700 font-bold text-xs hover:bg-emerald-100 border border-emerald-200/50 transition-colors"
+                >
+                  Warga
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setUsername("pemda123"); setPassword("wargalink123"); }}
+                  className="px-3 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200 border border-slate-300/50 transition-colors"
+                >
+                  Pemda
+                </button>
+              </div>
+            </div>
 
           </div>
         </div>
