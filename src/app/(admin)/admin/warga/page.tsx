@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useApp, Warga } from "@/context/AppContext";
-import { Download, Edit, Trash2 } from "lucide-react";
+import { Download, Edit, Trash2, Trophy } from "lucide-react";
 
 export default function AdminWarga() {
   const { daftarWarga, tambahWarga, updateWarga, hapusWarga } = useApp();
@@ -202,6 +202,7 @@ export default function AdminWarga() {
                 <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">No. KK</TableHead>
                 <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">NIK</TableHead>
                 <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">RT</TableHead>
+                <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Peringkat Poin</TableHead>
                 <TableHead className="font-extrabold text-slate-700 dark:text-slate-300">Status Domisili</TableHead>
                 <TableHead className="text-right font-extrabold text-slate-700 dark:text-slate-300">Aksi</TableHead>
               </TableRow>
@@ -216,6 +217,12 @@ export default function AdminWarga() {
                     <Badge variant="outline" className="bg-slate-100/50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-slate-200/50 dark:border-slate-700/50 font-bold">
                       RT {warga.rt}
                     </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1.5 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-800 w-max">
+                      <Trophy className="w-3.5 h-3.5" />
+                      <span className="font-bold text-xs">{1250 + (warga.id * 50)} <span className="font-medium text-[10px] opacity-80">pts</span></span>
+                    </div>
                   </TableCell>
                   <TableCell>
                     <Badge className={warga.status === "Tetap" ? "bg-emerald-100/80 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-400 hover:bg-emerald-100/80 dark:hover:bg-emerald-900/40 border-0" : "bg-blue-100/80 dark:bg-blue-900/40 text-blue-800 dark:text-blue-400 hover:bg-blue-100/80 dark:hover:bg-blue-900/40 border-0"}>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, Bell, Clock, FileText, ArrowRight, MessageSquare, Check, Calendar, Siren, Flame, ShieldAlert, HeartPulse, Tent, Users, PieChart, ShoppingBag } from "lucide-react";
+import { Wallet, Bell, Clock, FileText, ArrowRight, MessageSquare, Check, Calendar, Siren, Flame, ShieldAlert, HeartPulse, Tent, Users, PieChart, ShoppingBag, Trophy, Medal, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -57,7 +57,28 @@ export default function WargaHome() {
 
       <StaggerContainer className="px-5 -mt-8 space-y-6">
 
-
+        {/* Gamification WargaPoin Card */}
+        <StaggerItem>
+          <Link href="/warga/poin" className="block relative bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-500 p-5 rounded-[2rem] shadow-xl shadow-amber-500/20 overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+            <div className="flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/30 shadow-inner group-hover:scale-110 transition-transform">
+                  <Trophy className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-amber-100 text-xs font-bold uppercase tracking-wider mb-0.5">WargaPoin Anda</p>
+                  <p className="text-2xl font-black text-white flex items-center gap-1">
+                    1,250 <span className="text-sm font-medium text-amber-100/90 ml-1">pts</span>
+                  </p>
+                </div>
+              </div>
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-colors">
+                <ChevronRight className="w-5 h-5 text-white" />
+              </div>
+            </div>
+          </Link>
+        </StaggerItem>
         {/* Quick Action Card (Iuran) */}
         <StaggerItem>
           <Card className="border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] bg-white/50 backdrop-blur-xl rounded-[2rem] overflow-hidden">
