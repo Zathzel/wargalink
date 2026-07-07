@@ -75,7 +75,14 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
   const pemohonNama = currentUser.desc.split(",")[0].trim();
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto shadow-2xl shadow-blue-900/10 relative bg-slate-50">
+    <div className="min-h-screen flex flex-col max-w-md mx-auto shadow-2xl shadow-blue-900/10 relative bg-slate-50 overflow-hidden">
+      {/* Ambient Mesh Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/20 rounded-full blur-[80px]"></div>
+        <div className="absolute top-[40%] right-[-10%] w-[50%] h-[50%] bg-purple-400/10 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[60%] bg-teal-300/10 rounded-full blur-[100px]"></div>
+      </div>
+      
       {/* Notification Panel Overlay */}
       {showNotif && (
         <div
@@ -125,7 +132,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* Header Bar */}
-      <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-slate-100 px-5 py-3 flex items-center justify-between shrink-0">
+      <div className="sticky top-0 z-30 bg-white/70 backdrop-blur-xl border-b border-white/50 px-5 py-3 flex items-center justify-between shrink-0 shadow-sm">
         <div className="flex items-center gap-2">
           <AppLogo className="h-7 w-8" />
           <span className="font-extrabold text-slate-800 text-sm tracking-tight">WargaLink</span>
@@ -158,7 +165,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
       </main>
 
       {/* Floating Bottom Navigation */}
-      <nav className="fixed bottom-6 left-4 right-4 max-w-[calc(28rem-2rem)] mx-auto h-16 bg-white/90 backdrop-blur-md border border-slate-200 shadow-xl shadow-blue-900/10 rounded-2xl flex items-center justify-around px-1 z-30" aria-label="Navigasi utama">
+      <nav className="fixed bottom-6 left-4 right-4 max-w-[calc(28rem-2rem)] mx-auto h-16 bg-white/60 backdrop-blur-2xl border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-[2rem] flex items-center justify-around px-2 z-30" aria-label="Navigasi utama">
         {navigation.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);
@@ -174,12 +181,12 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
               }`}
             >
               {/* Active indicator pill */}
-              <div className={`relative flex items-center justify-center w-10 h-7 rounded-full transition-all duration-200 ${
-                active ? "bg-blue-50" : ""
+              <div className={`relative flex items-center justify-center w-12 h-8 rounded-full transition-all duration-300 ${
+                active ? "bg-gradient-to-tr from-blue-100 to-indigo-50 shadow-inner" : ""
               }`}>
-                <Icon className={`w-5 h-5 transition-transform duration-200 ${active ? "scale-110" : ""}`} />
+                <Icon className={`w-5 h-5 transition-transform duration-300 ${active ? "scale-110" : ""}`} />
                 {active && (
-                  <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full" />
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
                 )}
               </div>
               <span className={`text-[10px] font-semibold transition-all ${active ? "text-primary" : ""}`}>

@@ -40,13 +40,17 @@ export default function WargaHome() {
   return (
     <div className="flex flex-col min-h-screen bg-transparent pb-8">
       {/* Premium Greeting Banner */}
-      <div className="bg-gradient-to-br from-blue-700 via-primary to-blue-900 text-white p-8 pb-16 rounded-b-[2.5rem] shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
-        <div className="absolute bottom-0 left-0 w-40 h-40 bg-emerald-400/20 rounded-full blur-2xl -ml-10 -mb-10"></div>
+      <div className="bg-gradient-to-br from-blue-600 via-primary to-indigo-800 text-white p-8 pb-16 rounded-b-[3rem] shadow-[0_20px_40px_-15px_rgba(29,78,216,0.3)] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-72 h-72 bg-white/15 rounded-full blur-[80px] -mr-20 -mt-20 mix-blend-overlay"></div>
+        <div className="absolute bottom-0 left-0 w-56 h-56 bg-sky-300/30 rounded-full blur-[60px] -ml-10 -mb-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
         <div className="relative z-10">
-          <h2 className="text-3xl font-extrabold mb-1 tracking-tight">Halo, {pemohonNama}!</h2>
-          <p className="text-primary-foreground/90 text-sm font-medium">RT 01 / RW 05, Blok A2 No 15</p>
-          <p className="text-primary-foreground/70 text-xs mt-1">Selamat datang di WargaLink</p>
+          <h2 className="text-3xl font-extrabold mb-1 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">Halo, {pemohonNama}!</h2>
+          <p className="text-white/90 text-sm font-medium flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            RT 01 / RW 05, Blok A2 No 15
+          </p>
+          <p className="text-white/70 text-xs mt-2">Selamat datang di WargaLink Premium</p>
         </div>
       </div>
 
@@ -54,16 +58,19 @@ export default function WargaHome() {
       <StaggerContainer className="px-5 -mt-8 space-y-6">
         {/* Panic Button Darurat */}
         <StaggerItem>
-          <Card className="border border-red-500/30 shadow-xl shadow-red-900/10 bg-gradient-to-r from-red-500 to-rose-600 rounded-2xl overflow-hidden text-white relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+          <Card className="border border-red-400/50 shadow-[0_20px_40px_-15px_rgba(225,29,72,0.4)] bg-gradient-to-r from-red-500 via-rose-600 to-red-600 rounded-[2rem] overflow-hidden text-white relative group">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-white/20 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700"></div>
             <CardContent className="p-5 flex items-center justify-between relative z-10">
               <div className="flex items-center gap-4">
-                <div className="bg-white/20 p-3 rounded-2xl shadow-inner animate-pulse">
-                  <Siren className="w-8 h-8 text-white" />
+                <div className="relative">
+                  <div className="absolute inset-0 bg-red-400 rounded-2xl animate-ping opacity-40"></div>
+                  <div className="bg-white/20 backdrop-blur-md p-3.5 rounded-2xl shadow-inner relative z-10 border border-white/20">
+                    <Siren className="w-8 h-8 text-white" />
+                  </div>
                 </div>
                 <div>
-                  <p className="text-xl font-extrabold tracking-tight">TOMBOL DARURAT</p>
-                  <p className="text-xs font-medium text-red-100">Tekan jika butuh bantuan segera</p>
+                  <p className="text-xl font-extrabold tracking-tight drop-shadow-md">TOMBOL DARURAT</p>
+                  <p className="text-[11px] font-semibold text-red-100/90 tracking-wide uppercase mt-0.5">Tekan jika butuh bantuan segera</p>
                 </div>
               </div>
               
@@ -139,7 +146,7 @@ export default function WargaHome() {
 
         {/* Quick Action Card (Iuran) */}
         <StaggerItem>
-          <Card className="border border-white/40 shadow-xl shadow-blue-900/5 bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden">
+          <Card className="border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] bg-white/50 backdrop-blur-xl rounded-[2rem] overflow-hidden">
             <CardContent className="p-5 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className={`${!iuranAktif ? "bg-sky-100 text-sky-600" : myTagihan.status === "Lunas" ? "bg-emerald-100 text-emerald-600" : myTagihan.status === "Menunggu Verifikasi" ? "bg-amber-100 text-amber-600" : "bg-blue-100 text-blue-600"} p-3 rounded-2xl shadow-inner`}>
@@ -203,41 +210,41 @@ export default function WargaHome() {
             <h3 className="font-bold text-slate-800 tracking-tight">Layanan Warga</h3>
           </div>
           <div className="grid grid-cols-3 gap-3">
-            <Link href="/warga/surat" className="group bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 flex flex-col items-center justify-center gap-2 hover:-translate-y-1 hover:shadow-xl hover:bg-white transition-all duration-300 text-center">
-              <div className="bg-blue-50 p-2.5 rounded-xl text-blue-600 group-hover:scale-110 transition-transform duration-300">
-                <FileText className="w-5 h-5" />
+            <Link href="/warga/surat" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
+              <div className="bg-gradient-to-br from-blue-100 to-blue-50 p-3 rounded-2xl text-blue-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <FileText className="w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-slate-700 leading-tight">Pengajuan Surat</span>
+              <span className="text-xs font-bold text-slate-700 leading-tight">Surat</span>
             </Link>
-            <Link href="/warga/aduan" className="group bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 flex flex-col items-center justify-center gap-2 hover:-translate-y-1 hover:shadow-xl hover:bg-white transition-all duration-300 text-center">
-              <div className="bg-emerald-50 p-2.5 rounded-xl text-emerald-600 group-hover:scale-110 transition-transform duration-300">
-                <MessageSquare className="w-5 h-5" />
+            <Link href="/warga/aduan" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
+              <div className="bg-gradient-to-br from-emerald-100 to-emerald-50 p-3 rounded-2xl text-emerald-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <MessageSquare className="w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-slate-700 leading-tight">Aduan Warga</span>
+              <span className="text-xs font-bold text-slate-700 leading-tight">Aduan</span>
             </Link>
-            <Link href="/warga/pengumuman" className="group bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 flex flex-col items-center justify-center gap-2 hover:-translate-y-1 hover:shadow-xl hover:bg-white transition-all duration-300 text-center">
-              <div className="bg-amber-50 p-2.5 rounded-xl text-amber-600 group-hover:scale-110 transition-transform duration-300">
-                <Bell className="w-5 h-5" />
+            <Link href="/warga/pengumuman" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
+              <div className="bg-gradient-to-br from-amber-100 to-amber-50 p-3 rounded-2xl text-amber-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <Bell className="w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-slate-700 leading-tight">Info & Agenda</span>
+              <span className="text-xs font-bold text-slate-700 leading-tight">Info RT</span>
             </Link>
-            <Link href="/warga/fasilitas" className="group bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 flex flex-col items-center justify-center gap-2 hover:-translate-y-1 hover:shadow-xl hover:bg-white transition-all duration-300 text-center">
-              <div className="bg-purple-50 p-2.5 rounded-xl text-purple-600 group-hover:scale-110 transition-transform duration-300">
-                <Tent className="w-5 h-5" />
+            <Link href="/warga/fasilitas" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
+              <div className="bg-gradient-to-br from-purple-100 to-purple-50 p-3 rounded-2xl text-purple-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <Tent className="w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-slate-700 leading-tight">Pinjam Fasilitas</span>
+              <span className="text-xs font-bold text-slate-700 leading-tight">Fasilitas</span>
             </Link>
-            <Link href="/warga/tamu" className="group bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 flex flex-col items-center justify-center gap-2 hover:-translate-y-1 hover:shadow-xl hover:bg-white transition-all duration-300 text-center">
-              <div className="bg-teal-50 p-2.5 rounded-xl text-teal-600 group-hover:scale-110 transition-transform duration-300">
-                <Users className="w-5 h-5" />
+            <Link href="/warga/tamu" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
+              <div className="bg-gradient-to-br from-teal-100 to-teal-50 p-3 rounded-2xl text-teal-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-slate-700 leading-tight">Lapor Tamu</span>
+              <span className="text-xs font-bold text-slate-700 leading-tight">Tamu</span>
             </Link>
-            <Link href="/warga/polling" className="group bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl border border-white/60 shadow-lg shadow-slate-200/50 flex flex-col items-center justify-center gap-2 hover:-translate-y-1 hover:shadow-xl hover:bg-white transition-all duration-300 text-center">
-              <div className="bg-rose-50 p-2.5 rounded-xl text-rose-600 group-hover:scale-110 transition-transform duration-300">
-                <PieChart className="w-5 h-5" />
+            <Link href="/warga/polling" className="group bg-white/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/60 shadow-[0_8px_20px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center gap-3 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgb(0,0,0,0.08)] hover:bg-white/80 transition-all duration-300 text-center">
+              <div className="bg-gradient-to-br from-rose-100 to-rose-50 p-3 rounded-2xl text-rose-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <PieChart className="w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-slate-700 leading-tight">E-Voting / Polling</span>
+              <span className="text-xs font-bold text-slate-700 leading-tight">Polling</span>
             </Link>
           </div>
         </StaggerItem>
@@ -250,7 +257,7 @@ export default function WargaHome() {
             </Link>
           </div>
           {latestSurat ? (
-            <Card className="border border-white/60 shadow-lg shadow-slate-200/50 rounded-2xl bg-white/90 backdrop-blur-sm hover:-translate-y-0.5 transition-transform duration-300 cursor-pointer" onClick={() => router.push("/warga/surat")}>
+            <Card className="border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl bg-white/50 backdrop-blur-xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer" onClick={() => router.push("/warga/surat")}>
               <CardContent className="p-4 flex items-start gap-4">
                 <div className={`p-2.5 rounded-xl mt-0.5 ${latestSurat.status === "Disetujui" || latestSurat.status === "Selesai" ? "bg-emerald-100 text-emerald-600" : latestSurat.status === "Ditolak" ? "bg-red-100 text-red-600" : "bg-amber-100 text-amber-600"}`}>
                   <Clock className="w-5 h-5" />
@@ -301,7 +308,7 @@ export default function WargaHome() {
                 <Link
                   key={p.id}
                   href="/warga/pengumuman"
-                  className="block bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-white/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                  className="block bg-white/50 backdrop-blur-xl p-4 rounded-[1.5rem] border border-white/60 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="flex items-start gap-3">
                     <div className={`p-2.5 rounded-xl border ${tipeColor} shrink-0`}>
