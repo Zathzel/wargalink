@@ -112,13 +112,57 @@ export default function LandingPage() {
               </button>
             </div>
           </motion.div>
+          {/* Hero Image / Screenshot Showcase */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+            className="mt-16 relative max-w-5xl mx-auto"
+          >
+            {/* Glow / Backdrop behind image */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 to-teal-500/20 rounded-3xl blur-2xl transform scale-105"></div>
+            
+            <div className="relative rounded-2xl overflow-hidden border border-white/40 shadow-2xl bg-white/50 backdrop-blur-sm p-2">
+              <div className="rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                {/* Mac-like window controls for aesthetic */}
+                <div className="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-4 gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                </div>
+                <Image 
+                  src="/ui-rt-dashboard.png" 
+                  alt="WargaLink Dashboard" 
+                  width={1200} 
+                  height={800} 
+                  className="w-full h-auto object-cover object-top"
+                  priority
+                />
+              </div>
+            </div>
+            
+            {/* Floating Element Over Image */}
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              className="absolute -right-4 md:-right-10 top-1/4 bg-white/90 backdrop-blur-xl p-4 rounded-2xl shadow-xl border border-white flex items-center gap-3 z-20"
+            >
+              <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+                <Users className="w-5 h-5 text-teal-600" />
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-bold text-slate-500 uppercase">Warga Aktif</p>
+                <p className="text-lg font-black text-slate-800">+120</p>
+              </div>
+            </motion.div>
+          </motion.div>
 
           {/* Floating Stats */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto relative z-10"
           >
             {[
               { label: "RT Terdaftar", value: "500+" },
