@@ -46,7 +46,7 @@ export default function PemdaLayout({ children }: { children: ReactNode }) {
       toast.error("Akses Ditolak", {
         description: "Silakan login sebagai Pemda terlebih dahulu.",
       });
-      router.push("/");
+      router.push("/login");
     }
   }, [currentUser, isLoaded, router]);
 
@@ -54,7 +54,7 @@ export default function PemdaLayout({ children }: { children: ReactNode }) {
     e.preventDefault();
     logoutUser();
     toast.success("Berhasil keluar.");
-    router.push("/");
+    router.push("/login");
   };
 
   if (!isLoaded) {

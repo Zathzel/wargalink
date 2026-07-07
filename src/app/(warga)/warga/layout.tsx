@@ -60,7 +60,7 @@ export default function WargaLayout({ children }: { children: ReactNode }) {
       toast.error("Akses Ditolak", {
         description: "Silakan login sebagai Warga terlebih dahulu.",
       });
-      router.push("/");
+      router.push("/login");
     }
   }, [currentUser, isLoaded, router]);
 

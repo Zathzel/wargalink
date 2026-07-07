@@ -33,7 +33,7 @@ export default function WargaProfil() {
     e.preventDefault();
     logoutUser();
     toast.success("Berhasil keluar dari akun Warga.");
-    router.push("/");
+    router.push("/login");
   };
 
   const handleSaveKeamanan = (e: React.FormEvent) => {
