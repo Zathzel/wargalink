@@ -2,13 +2,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect } from "react";
 import { AppLogo } from "@/components/AppLogo";
 import { ArrowRight, LogIn, CheckCircle2, ShieldCheck, Users, Activity, ChevronRight, Zap } from "lucide-react";
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
 export default function LandingPage() {
-  const { scrollY } = useScroll();
-  const yHeroBg = useTransform(scrollY, [0, 500], [0, 150]);
+  const container = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
 
   const features = [
     {
@@ -40,69 +47,228 @@ export default function LandingPage() {
     }
   ];
 
+  useGSAP(() => {
+    // 1. Hero Animations
+    const heroTl = gsap.timeline();
+    
+    heroTl.from(".hero-watermark", {
+      opacity: 0,
+      scale: 1.2,
+      duration: 2,
+      ease: "power3.out"
+    })
+    .from(".hero-line", {
+      width: 0,
+      duration: 0.8,
+      ease: "power2.inOut"
+    }, "-=1.5")
+    .from(".hero-text", {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: "back.out(1.2)"
+    }, "-=1")
+    .from(".hero-desc", {
+      y: 20,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.out"
+    }, "-=0.6")
+    .from(".hero-btn", {
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.5,
+      ease: "back.out(1.5)"
+    }, "-=0.4")
+    .from(".hero-images .image-card", {
+      x: 100,
+      y: 50,
+      opacity: 0,
+      rotateY: 45,
+      rotateX: -20,
+      duration: 1.5,
+      stagger: 0.3,
+      ease: "power4.out"
+    }, "-=1.2")
+    .from(".hero-badge", {
+      scale: 0,
+      opacity: 0,
+      duration: 0.8,
+      ease: "elastic.out(1, 0.5)"
+    }, "-=0.5");
+
+    // Continuous floating animation for blob SVG
+    gsap.to(".blob-svg", {
+      rotation: 360,
+      transformOrigin: "center center",
+      duration: 40,
+      repeat: -1,
+      ease: "none"
+    });
+    
+    gsap.to(".blob-svg path", {
+      attr: { d: "M45.7,-76.1C58.9,-69.3,70.1,-58.5,79.4,-45.5C88.7,-32.5,96.1,-17.3,95.6,-2.4C95.1,12.5,86.7,27.1,76.5,39.4C66.3,51.7,54.3,61.7,40.9,69.5C27.5,77.3,12.7,82.9,-2.4,86.1C-17.5,89.3,-32.9,90.1,-46.3,83.9C-59.7,77.7,-71.1,64.5,-79.8,50.1C-88.5,35.7,-94.5,20.1,-93.6,5.1C-92.7,-9.9,-84.9,-24.3,-75.2,-36.8C-65.5,-49.3,-53.9,-59.9,-41,-67.2C-28.1,-74.5,-14,-78.5,0.7,-79.7C15.4,-80.9,32.5,-82.9,45.7,-76.1Z" },
+      duration: 5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+
+    // 2. Parallax effect on Mouse Move for Hero Images
+    if (heroRef.current) {
+      const handleMouseMove = (e: MouseEvent) => {
+        const { clientX, clientY } = e;
+        const xPos = (clientX / window.innerWidth - 0.5) * 20;
+        const yPos = (clientY / window.innerHeight - 0.5) * 20;
+
+        gsap.to(".hero-desktop", {
+          x: xPos,
+          y: yPos,
+          rotateY: -5 + xPos * 0.1,
+          rotateX: 5 - yPos * 0.1,
+          duration: 1,
+          ease: "power2.out"
+        });
+
+        gsap.to(".hero-mobile", {
+          x: -xPos * 1.5,
+          y: -yPos * 1.5,
+          rotateY: xPos * 0.2,
+          rotateX: -yPos * 0.2,
+          duration: 1,
+          ease: "power2.out"
+        });
+      };
+
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    }
+  }, { scope: container });
+
+  useGSAP(() => {
+    // 3. Scroll Animations for Features
+    const featureRows = gsap.utils.toArray<HTMLElement>(".feature-row");
+    
+    featureRows.forEach((row, i) => {
+      const textCol = row.querySelector(".feature-text");
+      const imgCol = row.querySelector(".feature-image");
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: "top 80%",
+          end: "top 50%",
+          scrub: 1,
+        }
+      });
+
+      tl.from(textCol, {
+        x: row.classList.contains("reverse-layout") ? 100 : -100,
+        opacity: 0,
+        ease: "power2.out"
+      }, 0)
+      .from(imgCol, {
+        x: row.classList.contains("reverse-layout") ? -100 : 100,
+        opacity: 0,
+        scale: 0.9,
+        ease: "power2.out"
+      }, 0);
+
+      // Parallax effect on image inside feature
+      const imgTarget = imgCol?.querySelector("img");
+      if (imgTarget) {
+        gsap.to(imgTarget, {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: row,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+      }
+    });
+
+    // 4. Draw SVG Line connecting features
+    gsap.from(".feature-connector-line", {
+      strokeDashoffset: 1000,
+      strokeDasharray: 1000,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".features-container",
+        start: "top 60%",
+        end: "bottom 80%",
+        scrub: 1,
+      }
+    });
+
+  }, { scope: container });
+
   return (
-    <>
-      {/* Hero Section - Unique Asymmetrical Layout */}
-      <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-slate-50">
+    <div ref={container} className="min-h-screen bg-slate-50 font-sans selection:bg-emerald-200 overflow-hidden">
+      {/* Hero Section - Unique GSAP Layout */}
+      <section ref={heroRef} className="relative min-h-[95vh] flex items-center pt-24 pb-12 overflow-hidden bg-slate-50">
+        
         {/* Giant Background Text */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.03]">
+        <div className="hero-watermark absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full overflow-hidden pointer-events-none select-none flex justify-center opacity-[0.03]">
           <h1 className="text-[25vw] font-black leading-none tracking-tighter text-emerald-950 whitespace-nowrap">
             WARGALINK
           </h1>
         </div>
 
-        {/* Abstract SVG Shapes */}
-        <div className="absolute inset-0 pointer-events-none">
-          <svg className="absolute top-0 right-0 w-1/2 h-full text-emerald-100/40 transform translate-x-1/3 -translate-y-1/4" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        {/* Abstract SVG Shapes (GSAP Morphed) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <svg className="blob-svg absolute top-0 right-0 w-[800px] h-[800px] text-emerald-100/60 transform translate-x-1/4 -translate-y-1/4" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18,97.2,-2.3C97.6,13.4,92.4,29.3,83.1,42.4C73.8,55.5,60.4,65.8,45.8,73.1C31.2,80.4,15.6,84.7,0.3,84.1C-15,83.5,-30.1,78.1,-43.3,69.5C-56.5,60.9,-67.9,49.1,-75.7,35.2C-83.5,21.3,-87.7,5.3,-86.3,-10.1C-84.9,-25.5,-77.9,-40.3,-67.6,-51.7C-57.3,-63.1,-43.7,-71.1,-29.6,-77.8C-15.5,-84.5,-0.9,-89.9,13.5,-88.7C27.9,-87.5,42.5,-79.8,44.7,-76.4Z" transform="translate(100 100)" />
           </svg>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400/20 rounded-full blur-[100px]"></div>
+          <div className="absolute bottom-10 left-10 w-96 h-96 bg-teal-400/20 rounded-full blur-[120px]"></div>
+          
+          {/* Decorative Floating Geometry */}
+          <div className="absolute top-1/4 left-1/4 w-12 h-12 border-4 border-emerald-500/20 rounded-lg transform rotate-45 blob-svg" style={{ animationDuration: '20s' }}></div>
+          <div className="absolute bottom-1/4 right-1/4 w-8 h-8 bg-emerald-500/20 rounded-full blob-svg" style={{ animationDuration: '15s' }}></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
           
           {/* Left Side: Minimalist Text & CTA */}
           <div className="flex-1 w-full text-left pt-10 lg:pt-0 lg:pr-10 relative z-30">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <div className="w-16 h-1.5 bg-emerald-500 mb-8 rounded-full shadow-lg shadow-emerald-500/40"></div>
+            <div>
+              <div className="hero-line w-16 h-1.5 bg-emerald-500 mb-8 rounded-full shadow-lg shadow-emerald-500/40"></div>
               
-              <h2 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-black text-slate-800 tracking-tighter leading-[0.9] mb-8">
-                RT/RW <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-500 to-teal-700">
-                  Era Baru.
-                </span>
+              <h2 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-black text-slate-800 tracking-tighter leading-[0.9] mb-8 overflow-hidden">
+                <div className="hero-text pb-2">RT/RW</div>
+                <div className="hero-text text-transparent bg-clip-text bg-gradient-to-br from-emerald-500 to-teal-700">Era Baru.</div>
               </h2>
               
-              <p className="text-lg text-slate-600 font-medium mb-10 max-w-sm leading-relaxed">
-                Platform digital tanpa batas untuk mengelola warga, keuangan, dan aduan. Lupakan kertas, mulai langkah cerdas.
+              <p className="hero-desc text-lg text-slate-600 font-medium mb-10 max-w-sm leading-relaxed">
+                Platform digital tanpa batas untuk mengelola warga, keuangan, dan aduan. Lupakan kertas, mulai langkah cerdas bersama ekosistem cerdas.
               </p>
               
-              <Link href="/login">
-                <button className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-slate-900/30 transition-all hover:scale-105 active:scale-95 group">
-                  Eksplorasi <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-                </button>
-              </Link>
-            </motion.div>
+              <div className="hero-btn">
+                <Link href="/login">
+                  <button className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-slate-900/30 transition-all hover:scale-105 active:scale-95 group">
+                    Eksplorasi Sekarang <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
 
           {/* Right Side: Composition Image Showcase */}
-          <div className="flex-[1.4] w-full relative h-[400px] sm:h-[500px] lg:h-[650px] perspective-1000">
-            <motion.div
-              initial={{ opacity: 0, rotateY: 20, rotateX: 10, z: -100 }}
-              animate={{ opacity: 1, rotateY: -5, rotateX: 5, z: 0 }}
-              transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-              className="absolute top-10 right-0 lg:-right-10 w-[85%] lg:w-[90%] rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/60 bg-white/40 backdrop-blur-md p-2 z-10"
-              style={{ transformStyle: 'preserve-3d' }}
+          <div className="hero-images flex-[1.4] w-full relative h-[450px] sm:h-[500px] lg:h-[700px] perspective-1000">
+            
+            {/* Desktop Dashboard */}
+            <div
+              className="hero-desktop image-card absolute top-10 right-0 lg:-right-10 w-[85%] lg:w-[90%] rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/60 bg-white/40 backdrop-blur-md p-2 z-10"
+              style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-5deg) rotateX(5deg)' }}
             >
               <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
                 <div className="h-6 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
                 </div>
                 <Image 
                   src="/ui-rt-dashboard.png" 
@@ -113,13 +279,11 @@ export default function LandingPage() {
                   priority
                 />
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 50, x: -20 }}
-              animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-              className="absolute bottom-5 lg:bottom-10 left-0 lg:-left-10 w-[35%] sm:w-[30%] lg:w-[32%] rounded-[2rem] lg:rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border-4 border-white/90 bg-white z-20 overflow-hidden transform -rotate-6 hover:rotate-0 transition-transform duration-500"
+            {/* Mobile App */}
+            <div
+              className="hero-mobile image-card absolute bottom-5 lg:bottom-10 left-0 lg:-left-10 w-[35%] sm:w-[30%] lg:w-[32%] rounded-[2rem] lg:rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border-4 border-white/90 bg-white z-20 overflow-hidden transform -rotate-6 transition-transform duration-500"
             >
               <Image 
                 src="/ui-warga.png" 
@@ -129,125 +293,135 @@ export default function LandingPage() {
                 className="w-full h-auto object-cover object-top"
                 priority
               />
-            </motion.div>
+            </div>
             
             {/* Decorative Floating Status */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="absolute top-0 left-1/4 bg-white/90 backdrop-blur-xl p-3 sm:p-4 rounded-2xl shadow-xl border border-white flex items-center gap-3 z-30"
-            >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+            <div className="hero-badge absolute top-5 lg:top-0 left-1/4 bg-white/90 backdrop-blur-xl p-3 sm:p-4 rounded-2xl shadow-xl border border-white flex items-center gap-3 z-30">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                <Activity className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-600" />
               </div>
               <div>
-                <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">Sistem Aktif</p>
-                <p className="text-sm sm:text-lg font-black text-slate-800">100% Online</p>
+                <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest">Sistem Aktif</p>
+                <p className="text-sm sm:text-lg font-black text-slate-800">100% Terhubung</p>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Showcases */}
-      <section className="py-24 bg-white relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-40">
+      {/* Features Showcases with GSAP ScrollTrigger */}
+      <section ref={featuresRef} className="py-32 bg-white relative features-container overflow-hidden">
+        {/* Background Decorative Lines */}
+        <div className="absolute inset-0 pointer-events-none flex justify-center opacity-10">
+           <svg width="100%" height="100%" className="min-h-full">
+             <path className="feature-connector-line" d="M 50%, 0 C 30%, 500 70%, 1000 50%, 1500 C 30%, 2000 70%, 2500 50%, 3000" stroke="#10b981" strokeWidth="4" fill="none" />
+           </svg>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-48">
           {features.map((feature, idx) => (
-            <motion.div 
+            <div 
               key={idx}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className={`flex flex-col ${feature.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-16 lg:gap-24`}
+              className={`feature-row flex flex-col ${feature.reverse ? 'lg:flex-row-reverse reverse-layout' : 'lg:flex-row'} items-center gap-16 lg:gap-24 relative`}
             >
               {/* Text Content */}
-              <div className="flex-1 space-y-6 text-center lg:text-left relative z-10">
-                <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm mb-2">
+              <div className="feature-text flex-1 space-y-8 text-center lg:text-left relative z-10 bg-white/80 backdrop-blur-sm p-6 lg:p-0 rounded-3xl">
+                <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-emerald-50 border border-emerald-100 shadow-sm mb-2">
                   {feature.icon}
                 </div>
-                <h3 className="text-emerald-600 font-bold tracking-wider uppercase text-sm">{feature.subtitle}</h3>
-                <h2 className="text-3xl md:text-5xl font-black text-slate-800 tracking-tight leading-tight">
-                  {feature.title}
-                </h2>
+                <div>
+                  <h3 className="text-emerald-600 font-bold tracking-widest uppercase text-sm mb-3">{feature.subtitle}</h3>
+                  <h2 className="text-4xl md:text-5xl font-black text-slate-800 tracking-tight leading-tight">
+                    {feature.title}
+                  </h2>
+                </div>
                 <p className="text-lg text-slate-600 leading-relaxed font-medium">
                   {feature.description}
                 </p>
                 
-                <div className="flex flex-wrap gap-2 justify-center lg:justify-start pt-2">
+                <div className="flex flex-wrap gap-3 justify-center lg:justify-start pt-2">
                   {feature.badges.map((badge, i) => (
-                    <span key={i} className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-sm font-semibold flex items-center gap-1.5">
+                    <span key={i} className="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-bold flex items-center gap-2 border border-slate-200">
                       <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                       {badge}
                     </span>
                   ))}
                 </div>
 
-                <div className="pt-4 hidden lg:block">
-                  <Link href="/login" className="inline-flex items-center font-bold text-emerald-600 hover:text-emerald-700 transition-colors group">
-                    Pelajari lebih lanjut 
-                    <ChevronRight className="w-5 h-5 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                <div className="pt-6 hidden lg:block">
+                  <Link href="/login" className="inline-flex items-center font-bold text-slate-900 bg-emerald-100 px-6 py-3 rounded-full hover:bg-emerald-200 transition-colors group">
+                    Pelajari Modul Ini 
+                    <ChevronRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
 
               {/* Image Showcase */}
-              <div className="flex-1 w-full max-w-lg lg:max-w-none relative">
-                <div className="absolute inset-0 bg-gradient-to-tr from-emerald-100 to-teal-50 rounded-[3rem] transform rotate-3 scale-[1.02] shadow-inner transition-transform duration-700 hover:rotate-6"></div>
-                <div className="relative rounded-[2.5rem] overflow-hidden border-[6px] border-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] bg-slate-100 group">
+              <div className="feature-image flex-1 w-full max-w-lg lg:max-w-none relative">
+                <div className="absolute inset-0 bg-gradient-to-tr from-emerald-100 to-teal-50 rounded-[3rem] transform rotate-3 scale-[1.05] shadow-inner"></div>
+                <div className="relative rounded-[2.5rem] overflow-hidden border-8 border-white shadow-2xl bg-slate-100 h-[500px]">
                   <Image 
                     src={feature.image}
                     alt={feature.title}
                     width={1000}
                     height={2000}
-                    className="w-full h-auto object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                    className="w-full h-[150%] object-cover object-top origin-top"
                   />
                   {/* Glass overlay reflection */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none transform -translate-x-full group-hover:translate-x-full" style={{ transition: 'all 1.5s ease' }}></div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 pointer-events-none transform -translate-x-full" style={{ transition: 'all 1.5s ease' }}></div>
                 </div>
                 
                 {/* Decorative floating element */}
-                <motion.div 
-                  animate={{ y: [0, -10, 0] }} 
-                  transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                  className={`absolute ${feature.reverse ? '-left-8' : '-right-8'} top-1/4 bg-white/80 backdrop-blur-xl p-4 rounded-2xl shadow-xl border border-white hidden md:flex items-center gap-3 z-20`}
-                >
-                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                <div className={`absolute ${feature.reverse ? '-left-10' : '-right-10'} top-1/4 bg-white/90 backdrop-blur-xl p-5 rounded-3xl shadow-2xl border border-white/50 hidden md:flex items-center gap-4 z-20`}>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30">
+                    <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-slate-500 uppercase">Status</p>
-                    <p className="text-sm font-black text-slate-800">Tersinkronisasi</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Sinkronisasi</p>
+                    <p className="text-base font-black text-slate-800">Real-time Data</p>
                   </div>
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-slate-900"></div>
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-emerald-500/20 blur-[100px] rounded-full"></div>
+      <section className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-slate-950"></div>
+        
+        {/* Dynamic Background Grid */}
+        <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" className="text-emerald-500/30" strokeWidth="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-500/20 blur-[120px] rounded-full pointer-events-none"></div>
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-6">
-            Siap Mengubah RT Anda Menjadi Digital?
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-emerald-400 text-sm font-bold tracking-widest uppercase mb-8">
+            <Zap className="w-4 h-4" /> Gabung Sekarang
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-8 leading-tight">
+            Digitalisasi RT Anda <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">Mulai Hari Ini.</span>
           </h2>
-          <p className="text-xl text-slate-300 mb-10 font-medium">
-            Bergabunglah dengan ribuan pengurus RT lainnya yang telah beralih ke WargaLink.
+          <p className="text-xl md:text-2xl text-slate-400 mb-12 font-medium max-w-2xl mx-auto leading-relaxed">
+            Tidak perlu menunggu besok. Ratusan rukun tetangga telah merasakan kemudahannya. Jadikan lingkungan Anda lebih maju.
           </p>
           <Link href="/login">
-            <button className="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-900 px-10 py-5 rounded-2xl font-black text-xl shadow-xl shadow-emerald-500/20 transition-all hover:-translate-y-1 active:scale-95 mx-auto">
-              Daftar Sekarang <ArrowRight className="w-6 h-6" />
+            <button className="flex items-center justify-center gap-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-12 py-6 rounded-full font-black text-xl shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all hover:scale-105 active:scale-95 mx-auto group">
+              Mulai Gunakan WargaLink 
+              <ArrowRight className="w-6 h-6 transform group-hover:translate-x-2 transition-transform" />
             </button>
           </Link>
         </div>
       </section>
 
-    </>
+    </div>
   );
 }

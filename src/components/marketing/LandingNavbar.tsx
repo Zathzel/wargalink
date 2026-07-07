@@ -4,12 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AppLogo } from "@/components/AppLogo";
 import { LogIn, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export function LandingNavbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   const links = [
     { name: "Beranda", href: "/" },
@@ -19,8 +22,35 @@ export function LandingNavbar() {
     { name: "Kontak", href: "/kontak" },
   ];
 
+  useGSAP(() => {
+    gsap.from(navRef.current, {
+      y: -100,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      delay: 0.2
+    });
+
+    gsap.from(".nav-link", {
+      opacity: 0,
+      y: -20,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: "back.out(1.5)",
+      delay: 0.5
+    });
+
+    gsap.from(".nav-cta", {
+      opacity: 0,
+      scale: 0.8,
+      duration: 0.5,
+      ease: "back.out(1.5)",
+      delay: 1
+    });
+  }, { scope: navRef });
+
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/50 shadow-sm transition-all">
+    <nav ref={navRef} className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/50 shadow-sm transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
@@ -36,7 +66,7 @@ export function LandingNavbar() {
             <Link
               key={link.name}
               href={link.href}
-              className={`font-semibold text-sm transition-colors ${
+              className={`nav-link font-semibold text-sm transition-colors ${
                 pathname === link.href
                   ? "text-emerald-600"
                   : "text-slate-600 hover:text-emerald-500"
@@ -49,7 +79,7 @@ export function LandingNavbar() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login">
+          <Link href="/login" className="nav-cta">
             <button className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold shadow-md transition-all active:scale-95 text-sm">
               Masuk Aplikasi <LogIn className="w-4 h-4" />
             </button>
