@@ -258,18 +258,17 @@ export default function LandingPage() {
           </div>
 
           {/* Right Side: Composition Image Showcase */}
-          <div className="hero-images flex-[1.4] w-full relative h-[300px] sm:h-[400px] lg:h-[700px] perspective-1000 mt-8 lg:mt-0">
+          <div className="hero-images flex-[1.4] w-full relative perspective-1000 mt-12 lg:mt-0 flex flex-col items-center justify-center lg:block min-h-[400px] lg:h-[700px]">
             
             {/* Desktop Dashboard */}
             <div
-              className="hero-desktop image-card absolute top-5 lg:top-10 right-0 lg:-right-10 w-[85%] lg:w-[90%] rounded-2xl lg:rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/60 bg-white/40 backdrop-blur-md p-1.5 lg:p-2 z-10"
-              style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-5deg) rotateX(5deg)' }}
+              className="hero-desktop image-card relative lg:absolute top-0 lg:top-10 lg:-right-10 w-[90%] sm:w-[80%] lg:w-[90%] rounded-2xl lg:rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/60 bg-white/40 backdrop-blur-md p-1.5 lg:p-2 z-10 lg:[transform:rotateY(-5deg)_rotateX(5deg)]"
             >
               <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
-                <div className="h-6 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                <div className="h-4 lg:h-6 bg-slate-100 border-b border-slate-200 flex items-center px-2 lg:px-3 gap-1.5">
+                  <div className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-red-400"></div>
+                  <div className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-amber-400"></div>
+                  <div className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-emerald-400"></div>
                 </div>
                 <Image 
                   src="/ui-rt-dashboard.png" 
@@ -284,7 +283,7 @@ export default function LandingPage() {
 
             {/* Mobile App */}
             <div
-              className="hero-mobile image-card absolute bottom-5 lg:bottom-10 left-0 lg:-left-10 w-[35%] sm:w-[30%] lg:w-[32%] rounded-[2rem] lg:rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border-4 border-white/90 bg-white z-20 overflow-hidden transform -rotate-6 transition-transform duration-500"
+              className="hero-mobile image-card absolute lg:absolute bottom-0 lg:bottom-10 -right-2 sm:right-10 lg:auto lg:-left-10 w-[40%] sm:w-[35%] lg:w-[32%] rounded-[1.5rem] lg:rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] border-4 border-white/90 bg-white z-20 overflow-hidden transform lg:-rotate-6 transition-transform duration-500 translate-y-10 lg:translate-y-0"
             >
               <Image 
                 src="/ui-warga.png" 
@@ -297,7 +296,7 @@ export default function LandingPage() {
             </div>
             
             {/* Decorative Floating Status */}
-            <div className="hero-badge absolute top-5 lg:top-0 left-1/4 bg-white/90 backdrop-blur-xl p-3 sm:p-4 rounded-2xl shadow-xl border border-white flex items-center gap-3 z-30">
+            <div className="hero-badge absolute -left-4 sm:left-0 lg:left-1/4 top-10 lg:top-0 bg-white/90 backdrop-blur-xl p-3 sm:p-4 rounded-2xl shadow-xl border border-white flex items-center gap-2 sm:gap-3 z-30 transform -translate-y-1/2 lg:translate-y-0">
               <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-emerald-100 flex items-center justify-center">
                 <Activity className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-600" />
               </div>
